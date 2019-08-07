@@ -1,6 +1,10 @@
 /* This is the copy of pcal panchangJS*/
 // Panchang code
 // globals
+let Lmoon0;
+let Lsun0;
+let kyear, kmon, kday;
+let khr, kmin, ksek;
 const sin = Math.sin;
 const cos = Math.cos;
 const tan = Math.tan;
@@ -8,8 +12,8 @@ const atan = Math.atan;
 const floor = Math.floor;
 const round = Math.round;
 const abs = Math.abs;
-d2r = Math.PI / 180;
-r2d = 180 / Math.PI;
+let d2r = Math.PI / 180;
+let r2d = 180 / Math.PI;
 var zn = [
   'Mesha',
   'Vrushabha',
@@ -188,8 +192,8 @@ function corr2(l, ml, ms, f, d) {
   this.d = d;
 }
 
-var corrMoon = new Array(); // main
-i = 0;
+var corrMoon = []; // main
+ let i = 0;
 // ml, ms, f, d, l
 corrMoon[i++] = new corr(0, 0, 0, 4, 13.902);
 corrMoon[i++] = new corr(0, 0, 0, 2, 2369.912);
@@ -329,73 +333,73 @@ function daysInMonth(m, y) {
 //-----------------------------------------------------------------------------------
 function moon(jd) {
   // days from 1900
-  tdays = jd - 2415020;
-  t = tdays / 36525;
-  t2 = t * t;
-  t3 = t * t * t;
+  let tdays = jd - 2415020;
+  let t = tdays / 36525;
+  let t2 = t * t;
+  let t3 = t * t * t;
 
   // slope travels to the equator
-  ob = 23.452294 - 0.0130125 * t - 0.00000164 * t2 + 0.000000503 * t3;
+  var ob = 23.452294 - 0.0130125 * t - 0.00000164 * t2 + 0.000000503 * t3;
   // the average length moon
-  l =
+  var l =
     270.4337361 +
     13.176396544528099 * tdays -
     (5.86 * t2) / 3600 +
     (0.0068 * t3) / 3600;
   // the difference medium length Moon and the Sun (the averageElongation Moon):
-  d =
+  var d =
     350.7374861110581 +
     445267.1142166667 * t -
     t2 * 1.436111132303874e-3 +
     0.0000018888889 * t3;
   // Perigee moon
-  pe =
+  var pe =
     334.329556 +
     (14648522.52 * t) / 3600 -
     (37.17 * t2) / 3600 -
     (0.045 * t3) / 3600;
   // the average anomoly sun
-  ms =
+  var ms =
     358.4758333333334 +
     35999.04974999958 * t -
     t2 * 1.500000059604645e-4 -
     t3 * 3.3333333623078e-6;
   // The average anomoloy moon
   //ml = 296.1046083333757 + 477198.8491083336*t + 0.0091916667090522*t2 + 0.0000143888893*t3;
-  ml = fix360(l - pe);
+  var ml = fix360(l - pe);
   // Rising length node orbit the moon:
-  om =
+  var om =
     259.183275 -
     (6962911.23 * t) / 3600 +
     (7.48 * t2) / 3600 +
     (0.008 * t3) / 3600;
   // the average length Moon, measured from the bottom up hub orbit:
 
-  f = fix360(l - om);
+  var f = fix360(l - om);
 
   
     // periodic revisions
-    r2rad = 360.0 * d2r;
-    tb = tdays * 1e-12; // *10^12
-    t2c = tdays * tdays * 1e-16; // *10^16
-    a1 = sin(r2rad * (0.53733431 - 10104982 * tb + 191 * t2c));
-    a2 = sin(r2rad * (0.71995354 - 147094228 * tb + 43 * t2c));
-    c2 = cos(r2rad * (0.71995354 - 147094228 * tb + 43 * t2c));
-    a3 = sin(r2rad * (0.14222222 + 1536238 * tb));
-    a4 = sin(r2rad * (0.48398132 - 147269147 * tb + 43 * t2c));
-    c4 = cos(r2rad * (0.48398132 - 147269147 * tb + 43 * t2c));
-    a5 = sin(r2rad * (0.52453688 - 147162675 * tb + 43 * t2c));
-    a6 = sin(r2rad * (0.84536324 - 11459387 * tb));
-    a7 = sin(r2rad * (0.23363774 + 1232723 * tb + 191 * t2c));
-    a8 = sin(r2rad * (0.5875 + 9050118 * tb));
-    a9 = sin(r2rad * (0.61043085 - 67718733 * tb));
+    var r2rad = 360.0 * d2r;
+    var tb = tdays * 1e-12; // *10^12
+    var t2c = tdays * tdays * 1e-16; // *10^16
+    var a1 = sin(r2rad * (0.53733431 - 10104982 * tb + 191 * t2c));
+    var a2 = sin(r2rad * (0.71995354 - 147094228 * tb + 43 * t2c));
+    var c2 = cos(r2rad * (0.71995354 - 147094228 * tb + 43 * t2c));
+    var a3 = sin(r2rad * (0.14222222 + 1536238 * tb));
+    var a4 = sin(r2rad * (0.48398132 - 147269147 * tb + 43 * t2c));
+    var c4 = cos(r2rad * (0.48398132 - 147269147 * tb + 43 * t2c));
+    var a5 = sin(r2rad * (0.52453688 - 147162675 * tb + 43 * t2c));
+    var a6 = sin(r2rad * (0.84536324 - 11459387 * tb));
+    var a7 = sin(r2rad * (0.23363774 + 1232723 * tb + 191 * t2c));
+    var a8 = sin(r2rad * (0.5875 + 9050118 * tb));
+    var a9 = sin(r2rad * (0.61043085 - 67718733 * tb));
 
-    dlm =
+    var dlm =
       0.84 * a3 + 0.31 * a7 + 14.27 * a1 + 7.261 * a2 + 0.282 * a4 + 0.237 * a6;
-    dpm = -2.1 * a3 - 2.076 * a2 - 0.84 * a4 - 0.593 * a6;
-    dkm = 0.63 * a3 + 95.96 * a2 + 15.58 * a4 + 1.86 * a5;
-    dls = -6.4 * a3 - 0.27 * a8 - 1.89 * a6 + 0.2 * a9;
-    dgc = (-4.318 * c2 - 0.698 * c4) / 3600.0 / 360.0;
+    var dpm = -2.1 * a3 - 2.076 * a2 - 0.84 * a4 - 0.593 * a6;
+    var dkm = 0.63 * a3 + 95.96 * a2 + 15.58 * a4 + 1.86 * a5;
+    var dls = -6.4 * a3 - 0.27 * a8 - 1.89 * a6 + 0.2 * a9;
+    var dgc = (-4.318 * c2 - 0.698 * c4) / 3600.0 / 360.0;
     dgc = 1.000002708 + 139.978 * dgc;
 
     ml = d2r * (ml + (dlm - dpm) / 3600.0); //Average anomoly moon
@@ -403,23 +407,23 @@ function moon(jd) {
     f = d2r * (f + (dlm - dkm) / 3600.0);
     d = d2r * (d + (dlm - dls) / 3600.0); //avg elongation moon
 
-    lk = 0;
-    lk1 = 0;
-    sk = 0;
-    sinp = 0;
-    nib = 0;
-    g1c = 0;
-    i1corr = 1.0 - 6.832e-8 * tdays;
-    i2corr = dgc * dgc;
+    var lk = 0;
+    var lk1 = 0;
+    var sk = 0;
+    var sinp = 0;
+    var nib = 0;
+    var g1c = 0;
+    var i1corr = 1.0 - 6.832e-8 * tdays;
+    var i2corr = dgc * dgc;
 
     for (i = 0; i < 93; i++) {
       // outrage at length
-      arg =
+      var arg =
         corrMoon[i].mlcor * ml +
         corrMoon[i].mscor * ms +
         corrMoon[i].fcor * f +
         corrMoon[i].dcor * d;
-      sinarg = sin(arg);
+      var sinarg = sin(arg);
       if (corrMoon[i].mscor != 0) {
         sinarg *= i1corr;
         if (corrMoon[i].mscor == 2 || corrMoon[i].mscor == -2) sinarg *= i1corr;
@@ -439,7 +443,7 @@ function moon(jd) {
     }
 
     // resentments of the planets
-    dlid = 0.822 * sin(r2rad * (0.3248 - 0.0017125594 * tdays));
+    var dlid = 0.822 * sin(r2rad * (0.3248 - 0.0017125594 * tdays));
     dlid += 0.307 * sin(r2rad * (0.14905 - 0.0034251187 * tdays));
     dlid += 0.348 * sin(r2rad * (0.68266 - 0.0006873156 * tdays));
     dlid += 0.662 * sin(r2rad * (0.65162 + 0.0365724168 * tdays));
@@ -454,7 +458,7 @@ function moon(jd) {
     l = fix360(l);
 
     // angular velocity of the moon on ecliptic (deg/day):
-    vl = 13.176397;
+    var vl = 13.176397;
     vl = vl + 1.434006 * cos(ml);
     vl = vl + 0.280135 * cos(2 * d);
     vl = vl + 0.251632 * cos(2 * d - ml);
@@ -498,92 +502,93 @@ function moon(jd) {
 //----------------------------------------------------------------------
 function sun(jd) {
   // days frm 1900:
-  tdays = jd - 2415020;
+  var tdays = jd - 2415020;
 
-  t = tdays / 36525;
-  t2 = t * t;
-  t3 = t * t * t;
+  var t = tdays / 36525;
+  var t2 = t * t;
+  var t3 = t * t * t;
 
   // the avg len sun
 
-  ls = 279.696678 + 0.9856473354 * tdays + (1.089 * t2) / 3600;
+  var ls = 279.696678 + 0.9856473354 * tdays + (1.089 * t2) / 3600;
   // perigee sun
-  pes =
+  var pes =
     101.220833 +
     (6189.03 * t) / 3600 +
     (1.63 * t2) / 3600 +
     (0.012 * t3) / 3600;
   // avg anomoly sun
 
-  ms = fix360(ls - pes + 180);
-  g =
+  var ms = fix360(ls - pes + 180);
+  var g =
     ms +
     (0.266 * Math.sin((31.8 + 119.0 * t) * d2r) +
       6.4 * Math.sin((231.19 + 20.2 * t) * d2r) +
       (1.882 - 0.016 * t) * Math.sin((57.24 + 150.27 * t) * d2r)) /
       3600.0;
   // Rising sun node len
-  oms = 259.18 - 1934.142 * t;
+  var oms = 259.18 - 1934.142 * t;
   // eccentricity orbit sun
-  ex = 0.01675104 - 0.0000418 * t - 0.000000126 * t2;
+  var ex = 0.01675104 - 0.0000418 * t - 0.000000126 * t2;
   // avg length moon
-  l =
+  var l =
     270.4337361 +
     13.176396544528099 * tdays -
     (5.86 * t2) / 3600 +
     (0.0068 * t3) / 3600;
   // avg anomaly moon
-  ml =
+  var ml =
     296.1046083333757 +
     477198.8491083336 * t +
     0.0091916667090522 * t2 +
     0.0000143888893 * t3;
   // avg len earth
-  le = 99.696678 + 0.9856473354 * tdays + (1.089 * t2) / 3600;
+  var le = 99.696678 + 0.9856473354 * tdays + (1.089 * t2) / 3600;
 
-  om =
+  var om =
     259.183275 -
     (6962911.23 * t) / 3600 +
     (7.48 * t2) / 3600 +
     (0.008 * t3) / 3600;
 
   // eccentric anomoloy calculation iterative method
-  u = kepler(g, ex, 0.0000003);
+  var u = kepler(g, ex, 0.0000003);
 
 
     // cal true anomaly sun
-    b = sqrt((1 + ex) / (1 - ex));
+    var b = Math.sqrt((1 + ex) / (1 - ex));
+    let truanom;
     if (abs(Math.PI - u) < 1.0e-10) truanom = u;
     else truanom = 2.0 * atan(b * tan(u / 2));
     truanom = fix360(truanom * r2d);
 
     //corrections for cal of longitude and radius vector
-    u1 = (153.23 + 22518.7541 * t) * d2r;
-    u2 = (216.57 + 45037.5082 * t) * d2r;
-    u3 = (312.69 + 32964.3577 * t) * d2r;
-    u4 = (350.74 + 445267.1142 * t - 0.00144 * t2) * d2r;
-    u6 = (353.4 + 65928.71550000001 * t) * d2r;
-    u5 = (315.6 + 893.3 * t) * d2r;
+    var u1 = (153.23 + 22518.7541 * t) * d2r;
+    var u2 = (216.57 + 45037.5082 * t) * d2r;
+    var u3 = (312.69 + 32964.3577 * t) * d2r;
+    var u4 = (350.74 + 445267.1142 * t - 0.00144 * t2) * d2r;
+    var u6 = (353.4 + 65928.71550000001 * t) * d2r;
+    var u5 = (315.6 + 893.3 * t) * d2r;
 
-    dl = 0.00134 * cos(u1);
+    var dl = 0.00134 * cos(u1);
     dl += 0.00154 * cos(u2);
     dl += 0.002 * cos(u3);
     dl += 0.00179 * sin(u4);
     dl += (0.202 * sin(u5)) / 3600;
 
-    dr = 0.00000543 * sin(u1);
+    var dr = 0.00000543 * sin(u1);
     dr += 0.00001575 * sin(u2);
     dr += 0.00001627 * sin(u3);
     dr += 0.00003076 * cos(u4);
     dr += 9.26999999e-6 * sin(u6);
 
     // true len of sun (deg)
-    il = ls + dl + truanom - ms;
+    var il = ls + dl + truanom - ms;
 
     // corrections to abberations links
-    r1 = (1.0000002 * (1 - ex * ex)) / (1 + ex * cos(truanom * d2r));
-    rs = r1 + dr; // radius vector
-    ab = (20.496 * (1 - ex * ex)) / rs / 3600;
+    var r1 = (1.0000002 * (1 - ex * ex)) / (1 + ex * cos(truanom * d2r));
+    var rs = r1 + dr; // radius vector
+    var ab = (20.496 * (1 - ex * ex)) / rs / 3600;
     ls = il + nutation(jd) - ab; // app len sun
     LsunYoga = ls;
 
@@ -598,11 +603,11 @@ function sun(jd) {
 function tithi(jd, n1, tzone, len) {
   var s_t = {};
   var flag;
-  jdt = jd;
-  knv = Math.floor(((jd - 2415020) / 365.25) * 12.3685);
+  var jdt = jd;
+  var knv = Math.floor(((jd - 2415020) / 365.25) * 12.3685);
 
-  for (itit = n1; itit < n1 + 2; ++itit) {
-    aspect = len * itit; // sun n moon in the early tithi
+  for (var itit = n1; itit < n1 + 2; ++itit) {
+    var aspect = len * itit; // sun n moon in the early tithi
     flag = 0;
     if (aspect == 0) {
       jdt = novolun(jd, knv);
@@ -615,8 +620,8 @@ function tithi(jd, n1, tzone, len) {
     while (flag < 1) {
       Lsun0 = sun(jdt);
       Lmoon0 = moon(jdt);
-      a = fix360(Lsun0 + aspect); // pt should be where luna
-      asp1 = a - Lmoon0; // assymptots of the moon to ur point
+      var a = fix360(Lsun0 + aspect); // pt should be where luna
+      var asp1 = a - Lmoon0; // assymptots of the moon to ur point
       if (asp1 > 180) asp1 -= 360;
       if (asp1 < -180) asp1 += 360;
       flag = 1;
@@ -638,14 +643,14 @@ function tithi(jd, n1, tzone, len) {
 function nakshatra(jd, n_naksh, tzone) {
   var s_t = {};
   var flag;
-  jdt = jd;
+  var jdt = jd;
 
-  for (inak = n_naksh; inak < n_naksh + 2; ++inak) {
-    n1 = fix360((inak * 80) / 6); // co-ordinate start of nakshatra
+  for (var inak = n_naksh; inak < n_naksh + 2; ++inak) {
+    var n1 = fix360((inak * 80) / 6); // co-ordinate start of nakshatra
     flag = 0;
     while (flag < 1) {
       Lmoon0 = fix360(moon(jdt) + ayanamsa);
-      asp1 = n1 - Lmoon0; // distance frm moon before nakshatra(degree)
+      var asp1 = n1 - Lmoon0; // distance frm moon before nakshatra(degree)
       if (asp1 > 180) asp1 -= 360;
       if (asp1 < -180) asp1 += 360;
       flag = 1;
@@ -666,21 +671,21 @@ function nakshatra(jd, n_naksh, tzone) {
 function yoga(jd, zyoga, tzone) {
   var s_t = {};
   var flag;
-  jdt = jd;
-  z = zyoga;
+  var jdt = jd;
+  var z = zyoga;
   var nn_yoga = new Array(2);
   nn_yoga[0] = (Math.floor((z * 6) / 80) * 80) / 6;
   nn_yoga[1] = ((Math.floor((z * 6) / 80) + 1) * 80) / 6;
-  for (iyog = 0; iyog < 2; ++iyog) {
+  for (var iyog = 0; iyog < 2; ++iyog) {
     flag = 0;
     while (flag < 1) {
-      Lsun0 = sun(jdt);
-      Lmoon0 = moon(jdt);
-      dmoonYoga = LmoonYoga + ayanamsa - 491143.07698973856;
-      dsunYoga = LsunYoga + ayanamsa - 36976.91240579201;
+       Lsun0 = sun(jdt);
+       Lmoon0 = moon(jdt);
+      var dmoonYoga = LmoonYoga + ayanamsa - 491143.07698973856;
+      var dsunYoga = LsunYoga + ayanamsa - 36976.91240579201;
       //alert(LmoonYoga+"\r"+LsunYoga+"\r"+ayanamsa);
       z = dmoonYoga + dsunYoga;
-      asp1 = nn_yoga[iyog] - z;
+      var asp1 = nn_yoga[iyog] - z;
       flag = 1;
       if (Math.abs(asp1) > 0.001) {
         jdt += asp1 / (skor + 1.0145616633);
@@ -698,22 +703,22 @@ function yoga(jd, zyoga, tzone) {
 //cal time in the near past novoluna (err less then 2 min)
 //-----------------------------------------------------------------------------
 function novolun(jd, knv) {
-  t = (jd - 2415020) / 36525;
-  t2 = t * t;
-  t3 = t * t * t;
+  var t = (jd - 2415020) / 36525;
+  var t2 = t * t;
+  var t3 = t * t * t;
 
   
-    jdnv =
+  var jdnv =
       2415020.75933 + 29.53058868 * knv + 0.0001178 * t2 - 0.000000155 * t3;
     jdnv += 0.00033 * sin((166.56 + 132.87 * t - 0.009173 * t2) * d2r);
-    m = 359.2242 + 29.10535608 * knv - 0.0000333 * t2 - 0.00000347 * t3;
-    ml = 306.0253 + 385.81691806 * knv + 0.0107306 * t2 + 0.00001236 * t3;
-    f = 21.2964 + 390.67050646 * knv - 0.0016528 * t2 - 0.00000239 * t3;
+    var m = 359.2242 + 29.10535608 * knv - 0.0000333 * t2 - 0.00000347 * t3;
+    var ml = 306.0253 + 385.81691806 * knv + 0.0107306 * t2 + 0.00001236 * t3;
+    var f = 21.2964 + 390.67050646 * knv - 0.0016528 * t2 - 0.00000239 * t3;
     m *= d2r;
     ml *= d2r;
     f *= d2r;
 
-    djd = (0.1734 - 0.000393 * t) * sin(m);
+    var djd = (0.1734 - 0.000393 * t) * sin(m);
     djd += 0.0021 * sin(2 * m);
     djd -= 0.4068 * sin(ml);
     djd += 0.0161 * sin(2 * ml);
@@ -739,9 +744,9 @@ function kepler(m, ex, err) {
   //val u0, delta;
 
   m *= d2r;
-  u0 = m;
+  var u0 = m;
   err *= d2r;
-  delta = 1;
+  var delta = 1;
   while (Math.abs(delta) >= err) {
     delta = (m + ex * Math.sin(u0) - u0) / (1 - ex * Math.cos(u0));
     u0 += delta;
@@ -753,33 +758,33 @@ function kepler(m, ex, err) {
 // cal nutation in len
 //-----------------------------------------------------
 function nutation(jd) {
-  t = (jd - 2415020) / 36525;
-  t2 = t * t;
+  var t = (jd - 2415020) / 36525;
+  var t2 = t * t;
 
   // avg len sun
-  ls = 279.6967 + 36000.7689 * t + 0.000303 * t2;
+  var ls = 279.6967 + 36000.7689 * t + 0.000303 * t2;
   // avg len moon
-  l = 270.4341639 + 481267.8831417 * t - 0.0011333333 * t2;
+  var l = 270.4341639 + 481267.8831417 * t - 0.0011333333 * t2;
   // avg anomaly sun
-  ms = 358.4758333333334 + 35999.04974999958 * t - t2 * 1.500000059604645e-4;
+  var ms = 358.4758333333334 + 35999.04974999958 * t - t2 * 1.500000059604645e-4;
   // avg anomaly moon
-  ml = 296.1046083333757 + 477198.8491083336 * t + 0.0091916667090522 * t2;
+  var ml = 296.1046083333757 + 477198.8491083336 * t + 0.0091916667090522 * t2;
   // the diff medium len of moon and sun (avg elongation moon)
-  d = 350.7374861110581 + 445267.1142166667 * t - t2 * 1.436111132303874e-3;
+  var d = 350.7374861110581 + 445267.1142166667 * t - t2 * 1.436111132303874e-3;
 
-  om = 259.1832750002543 - 1934.142008333206 * t + 0.0020777778 * t2;
+  var om = 259.1832750002543 - 1934.142008333206 * t + 0.0020777778 * t2;
   ls *= d2r;
   l *= d2r;
   ms *= d2r;
   ml *= d2r;
   d *= d2r;
   om *= d2r;
-  d2 = d * d;
-  l2 = l * l;
-  ls2 = ls * ls;
+  var d2 = d * d;
+  var l2 = l * l;
+  var ls2 = ls * ls;
 
 
-    nut = (-17.2327 - 0.01737 * t) * sin(om);
+  var nut = (-17.2327 - 0.01737 * t) * sin(om);
     nut += 0.2088 * sin(2.0 * om);
     nut += 0.0675 * sin(ml);
     nut -= 0.0149 * sin(ml - d2);
@@ -801,16 +806,16 @@ function nutation(jd) {
 // Calculation ayanamsa (degrees)
 //-----------------------------------------------------
 function calcayan(jd) {
-  t = (jd - 2415020) / 36525;
+  var t = (jd - 2415020) / 36525;
   // avg node len moon
-  om =
+  var om =
     259.183275 -
     1934.142008333206 * t +
     0.0020777778 * t * t +
     0.0000022222222 * t * t * t;
   // avg len sun
-  ls = 279.696678 + 36000.76892 * t + 0.0003025 * t * t;
-  aya =
+  var ls = 279.696678 + 36000.76892 * t + 0.0003025 * t * t;
+  var aya =
     17.23 * Math.sin(d2r * om) +
     1.27 * Math.sin(d2r * ls * 2) -
     (5025.64 + 1.11 * t) * t;
@@ -824,8 +829,8 @@ function calcayan(jd) {
 //------------------------------------------------------------------------------------------
 function mdy2julian(m, d, y) {
   
-    im = 12 * (y + 4800) + m - 3;
-    j = (2 * (im - floor(im / 12) * 12) + 7 + 365 * im) / 12;
+    var im = 12 * (y + 4800) + m - 3;
+    var j = (2 * (im - floor(im / 12) * 12) + 7 + 365 * im) / 12;
     j = floor(j) + d + floor(im / 48) - 32083;
     if (j > 2299171) j += floor(im / 4800) - floor(im / 1200) + 38;
     j -= 0.5;
@@ -833,7 +838,8 @@ function mdy2julian(m, d, y) {
   return j;
 }
 
-function dTime(jd) {
+function dTime(jd) { 
+  debugger;
   var efdt = [
     124,
     85,
@@ -876,13 +882,13 @@ function dTime(jd) {
     65.7,
     75.5
   ];
-  s = calData(jd);
-  dgod = kyear + (kmon - 1) / 12 + (kday - 1) / 365.25;
-  t = (jd - 2378497) / 36525; // IN centuries rejection of 1800 bc
+  var s = calData(jd);
+  var dgod = kyear + (kmon - 1) / 12 + (kday - 1) / 365.25;
+  var t = (jd - 2378497) / 36525; // IN centuries rejection of 1800 bc
   //t = (jd - 2415020)/36525; // in cent rejection of 1900 bc
   if (dgod >= 1620 && dgod < 2010) {
-    i1 = Math.floor((dgod - 1620) / 10);
-    di = dgod - (1620 + i1 * 10);
+    var i1 = Math.floor((dgod - 1620) / 10);
+    var di = dgod - (1620 + i1 * 10);
     dt = efdt[i1] + ((efdt[i1 + 1] - efdt[i1]) * di) / 10;
   } else {
     if (dgod >= 2010) dt = 25.5 * t * t - 39;
@@ -900,37 +906,40 @@ function dTime(jd) {
 //------------------------------------------------------------------------------------------
 function calData(jd) {
   
-    z1 = jd + 0.5;
-    z2 = floor(z1);
-    f = z1 - z2;
+  var z1 = jd + 0.5;
+  var z2 = floor(z1);
+  var f = z1 - z2;
+  var a;
 
     if (z2 < 2299161) a = z2;
     else {
-      alf = floor((z2 - 1867216.25) / 36524.25);
+      var alf = floor((z2 - 1867216.25) / 36524.25);
       a = z2 + 1 + alf - floor(alf / 4);
     }
 
-    b = a + 1524;
-    c = floor((b - 122.1) / 365.25);
-    d = floor(365.25 * c);
-    e = floor((b - d) / 30.6001);
+    var b = a + 1524;
+    var c = floor((b - 122.1) / 365.25);
+    var d = floor(365.25 * c);
+    var e = floor((b - d) / 30.6001);
 
-    days = b - d - floor(30.6001 * e) + f;
+    var days = b - d - floor(30.6001 * e) + f;
     kday = floor(days);
+
 
     if (e < 13.5) kmon = e - 1;
     else kmon = e - 13;
 
+
     if (kmon > 2.5) kyear = c - 4716;
     if (kmon < 2.5) kyear = c - 4715;
 
-    hh1 = (days - kday) * 24;
+    var hh1 = (days - kday) * 24;
     khr = floor(hh1);
     kmin = hh1 - khr;
     ksek = kmin * 60;
     kmin = floor(ksek);
     ksek = floor((ksek - kmin) * 60);
-    s = new Date(kyear, kmon - 1, kday, khr, kmin, ksek, 0);
+    var s = new Date(kyear, kmon - 1, kday, khr, kmin, ksek, 0);
   
   return s;
 }
@@ -942,13 +951,13 @@ function lon2dmsz(x) {
   
     var d, m, s;
     x = abs(x);
-    z = floor(x / 30);
+    var z = floor(x / 30);
     d = floor(x);
-    ss0 = round((x - d) * 3600);
+    var ss0 = round((x - d) * 3600);
     m = floor(ss0 / 60);
     s = (ss0 % 60) % 60;
     d %= 30;
-    str = d + ' ' + m + "'" + s + '" ';
+    var str = d + ' ' + m + "'" + s + '" ';
   
   return str;
 }
@@ -961,10 +970,10 @@ function lon2dms(x) {
     var d, m, s;
     x = abs(x);
     d = floor(x);
-    ss0 = round((x - d) * 3600);
+    var ss0 = round((x - d) * 3600);
     m = floor(ss0 / 60);
     s = (ss0 % 60) % 60;
-    str = d + ' ' + m + "'" + s + '"';
+    var str = d + ' ' + m + "'" + s + '"';
   
   return str;
 }
@@ -988,19 +997,19 @@ function fix30(v) {
 //------------------------------------------------------------------------------------------
 function weekDay(jd) {
   // Julian date for the begin of the day
-  jd0 = Math.floor(jd) + 0.5;
+  var jd0 = Math.floor(jd) + 0.5;
   if (jd < jd0) jd0 -= 1;
 
   // day
-  jdn = jd0 + 1.5;
-  dn1 = Math.floor(jdn / 7) * 7;
+  var jdn = jd0 + 1.5;
+  var dn1 = Math.floor(jdn / 7) * 7;
 
-  wday = Math.floor(jdn - dn1);
+  var wday = Math.floor(jdn - dn1);
 
   return wday;
 }
 
-panchang = {
+var panchang = {
   Day: {},
   Tithi: {},
   Nakshatra: {},
@@ -1024,23 +1033,23 @@ panchang = {
       hr += d.getMinutes() / 60;
       var tzone = (d.getTimezoneOffset() / 60) * -1;
     
-    inpmin = Math.floor(d.getMinutes());
+      var inpmin = Math.floor(d.getMinutes());
     if (inpmin < 10) inpmin = '0' + inpmin;
 
     // Julian date in local p. LT:
-    dayhr = day + hr / 24;
-    jdlt = mdy2julian(mon, dayhr, year);
+    var dayhr = day + hr / 24;
+    var jdlt = mdy2julian(mon, dayhr, year);
 
     // day:
     n_wday = weekDay(jdlt);
     this.Day.name = wd[n_wday];
 
     // julian day at the begining of the day
-    jd0 = mdy2julian(mon, day, year);
-    jdut = jd0 + (hr - tzone) / 24;
+    var jd0 = mdy2julian(mon, day, year);
+    var jdut = jd0 + (hr - tzone) / 24;
 
     dt = dTime(jdut);
-    jd = jdut + dt / 24;
+    var jd = jdut + dt / 24;
 
     //ayyanamsa
     ayanamsa = calcayan(jd);
@@ -1052,15 +1061,15 @@ panchang = {
     Lsun = sun(jd);
 
     // yoga:
-    dmoonYoga = LmoonYoga + ayanamsa - 491143.07698973856;
-    dsunYoga = LsunYoga + ayanamsa - 36976.91240579201;
-    zyoga = dmoonYoga + dsunYoga;
+    var dmoonYoga = LmoonYoga + ayanamsa - 491143.07698973856;
+    var dsunYoga = LsunYoga + ayanamsa - 36976.91240579201;
+    var zyoga = dmoonYoga + dsunYoga;
     n_yoga = (zyoga * 6) / 80;
     while (n_yoga < 0) n_yoga += 27;
     while (n_yoga > 27) n_yoga -= 27;
-    n3 = n_yoga;
+    var n3 = n_yoga;
     n_yoga = Math.floor(n_yoga);
-    s_yoga = yoga(jd, zyoga, tzone);
+    var s_yoga = yoga(jd, zyoga, tzone);
 
     // Nakstra
     Lmoon0 = fix360(Lmoon + ayanamsa);
@@ -1078,7 +1087,7 @@ panchang = {
     Lmoon0 = Lmoon;
     Lsun0 = Lsun;
     if (Lmoon0 < Lsun0) Lmoon0 += 360;
-    nk = Math.floor((Lmoon0 - Lsun0) / 6);
+    var nk = Math.floor((Lmoon0 - Lsun0) / 6);
     if (nk == 0) n_karana = 10;
     if (nk >= 57) n_karana = nk - 50;
     if (nk > 0 && nk < 57) n_karana = nk - 1 - Math.floor((nk - 1) / 7) * 7;
@@ -1118,3 +1127,5 @@ panchang = {
     return result;
   }
 };
+
+export default panchang;
