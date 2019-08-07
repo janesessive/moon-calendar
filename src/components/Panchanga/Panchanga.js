@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import panchang from '../../lib/panchang';
+import PanchangaInfo from '../PanchangaInfo/PanchangaInfo';
 
 class Panchanga extends Component {
     state = {
@@ -7,9 +8,11 @@ class Panchanga extends Component {
     }
 
     componentDidMount () {
-        debugger;
+        
         const currentDate = new Date();
         const info = panchang.calculate(currentDate);
+        console.log(info);
+
         this.setState({ info, currentDate });
     }
     render () {
@@ -17,11 +20,8 @@ class Panchanga extends Component {
             return null;
         }
         return (
-            <div>
-                <h2>{this.state.currentDate.toString()}</h2>
-                <label>Ayanamsa</label>
-                <span>{this.state.info.Ayanamsa.name}</span>
-            </div>
+           
+            <PanchangaInfo info={this.state.info} currentDate={this.state.currentDate}/>
         );
     }
 }
