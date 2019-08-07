@@ -1,6 +1,13 @@
 /* This is the copy of pcal panchangJS*/
 // Panchang code
 // globals
+const sin = Math.sin;
+const cos = Math.cos;
+const tan = Math.tan;
+const atan = Math.atan;
+const floor = Math.floor;
+const round = Math.round;
+const abs = Math.abs;
 d2r = Math.PI / 180;
 r2d = 180 / Math.PI;
 var zn = [
@@ -366,7 +373,7 @@ function moon(jd) {
 
   f = fix360(l - om);
 
-  with (Math) {
+  
     // periodic revisions
     r2rad = 360.0 * d2r;
     tb = tdays * 1e-12; // *10^12
@@ -478,7 +485,7 @@ function moon(jd) {
     vl = vl - 0.001035 * cos(d + ml);
     vl = vl - 0.001019 * cos(2 * f + 2 * ml);
     vl = vl - 0.001006 * cos(ms + 2 * ml);
-  }
+  
   skor = vl;
   //l += ay;
   //if(l < 0.0)l += 360.0;
@@ -543,7 +550,7 @@ function sun(jd) {
   // eccentric anomoloy calculation iterative method
   u = kepler(g, ex, 0.0000003);
 
-  with (Math) {
+
     // cal true anomaly sun
     b = sqrt((1 + ex) / (1 - ex));
     if (abs(Math.PI - u) < 1.0e-10) truanom = u;
@@ -581,7 +588,7 @@ function sun(jd) {
     LsunYoga = ls;
 
     ls = fix360(ls);
-  }
+  
   return ls;
 }
 
@@ -695,7 +702,7 @@ function novolun(jd, knv) {
   t2 = t * t;
   t3 = t * t * t;
 
-  with (Math) {
+  
     jdnv =
       2415020.75933 + 29.53058868 * knv + 0.0001178 * t2 - 0.000000155 * t3;
     jdnv += 0.00033 * sin((166.56 + 132.87 * t - 0.009173 * t2) * d2r);
@@ -721,7 +728,7 @@ function novolun(jd, knv) {
     djd += 0.0005 * sin(m + 2 * ml);
 
     jdnv += djd;
-  }
+  
   return jdnv;
 }
 
@@ -771,7 +778,7 @@ function nutation(jd) {
   l2 = l * l;
   ls2 = ls * ls;
 
-  with (Math) {
+
     nut = (-17.2327 - 0.01737 * t) * sin(om);
     nut += 0.2088 * sin(2.0 * om);
     nut += 0.0675 * sin(ml);
@@ -786,7 +793,7 @@ function nutation(jd) {
     nut -= 0.0497 * sin(ls2 + ms);
     nut += 0.1261 * sin(ms);
     nut = nut / 3600.0;
-  }
+  
   return nut;
 }
 
@@ -816,13 +823,13 @@ function calcayan(jd) {
 // cal date by number of date mon and year
 //------------------------------------------------------------------------------------------
 function mdy2julian(m, d, y) {
-  with (Math) {
+  
     im = 12 * (y + 4800) + m - 3;
     j = (2 * (im - floor(im / 12) * 12) + 7 + 365 * im) / 12;
     j = floor(j) + d + floor(im / 48) - 32083;
     if (j > 2299171) j += floor(im / 4800) - floor(im / 1200) + 38;
     j -= 0.5;
-  }
+  
   return j;
 }
 
@@ -892,7 +899,7 @@ function dTime(jd) {
 // cal date on calendar date
 //------------------------------------------------------------------------------------------
 function calData(jd) {
-  with (Math) {
+  
     z1 = jd + 0.5;
     z2 = floor(z1);
     f = z1 - z2;
@@ -924,7 +931,7 @@ function calData(jd) {
     kmin = floor(ksek);
     ksek = floor((ksek - kmin) * 60);
     s = new Date(kyear, kmon - 1, kday, khr, kmin, ksek, 0);
-  }
+  
   return s;
 }
 
@@ -932,7 +939,7 @@ function calData(jd) {
 // transalation deg logitudinal in degrees,min and sec
 //------------------------------------------------------------------------------------------
 function lon2dmsz(x) {
-  with (Math) {
+  
     var d, m, s;
     x = abs(x);
     z = floor(x / 30);
@@ -942,7 +949,7 @@ function lon2dmsz(x) {
     s = (ss0 % 60) % 60;
     d %= 30;
     str = d + ' ' + m + "'" + s + '" ';
-  }
+  
   return str;
 }
 
@@ -950,7 +957,7 @@ function lon2dmsz(x) {
 // translation degrees in deg, min and sec
 //------------------------------------------------------------------------------------------
 function lon2dms(x) {
-  with (Math) {
+  
     var d, m, s;
     x = abs(x);
     d = floor(x);
@@ -958,7 +965,7 @@ function lon2dms(x) {
     m = floor(ss0 / 60);
     s = (ss0 % 60) % 60;
     str = d + ' ' + m + "'" + s + '"';
-  }
+  
   return str;
 }
 
@@ -1009,14 +1016,14 @@ panchang = {
       n_karana,
       n_yoga;
 
-    with (Math) {
+  
       var day = d.getDate();
       var mon = d.getMonth() + 1;
       var year = d.getFullYear();
       var hr = d.getHours();
       hr += d.getMinutes() / 60;
       var tzone = (d.getTimezoneOffset() / 60) * -1;
-    }
+    
     inpmin = Math.floor(d.getMinutes());
     if (inpmin < 10) inpmin = '0' + inpmin;
 
@@ -1077,9 +1084,9 @@ panchang = {
     if (nk > 0 && nk < 57) n_karana = nk - 1 - Math.floor((nk - 1) / 7) * 7;
     var s_karana = tithi(jd, nk, tzone, 6);
 
-    with (Math) {
+  
       var z = floor(abs(fix360(Lmoon + ayanamsa)) / 30);
-    }
+    
 
     this.Ayanamsa.name = lon2dms(ayanamsa);
     this.Raasi.degreeAbsolute = fix360(Lmoon + ayanamsa);
