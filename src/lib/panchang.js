@@ -37,7 +37,7 @@ var wd = [
   'Friday',
   'Saturday'
 ];
-var range = [1, 31, 0, 0, -3000, 4000, 0, 23, 0, 59, -12, 12, 0, 59];
+// var range = [1, 31, 0, 0, -3000, 4000, 0, 23, 0, 59, -12, 12, 0, 59];
 var naks = [
   'Ashwini',
   'Bharani',
@@ -141,35 +141,35 @@ var yog = [
   'Indra',
   'Vaidhruthi'
 ];
-var tipnaks = [
-  2,
-  5,
-  6,
-  0,
-  1,
-  4,
-  3,
-  2,
-  4,
-  5,
-  5,
-  0,
-  2,
-  1,
-  3,
-  6,
-  1,
-  4,
-  4,
-  5,
-  0,
-  3,
-  3,
-  3,
-  5,
-  0,
-  1
-];
+// var tipnaks = [
+//   2,
+//   5,
+//   6,
+//   0,
+//   1,
+//   4,
+//   3,
+//   2,
+//   4,
+//   5,
+//   5,
+//   0,
+//   2,
+//   1,
+//   3,
+//   6,
+//   1,
+//   4,
+//   4,
+//   5,
+//   0,
+//   3,
+//   3,
+//   3,
+//   5,
+//   0,
+//   1
+// ];
 var Lmoon, Lsun, skor, LmoonYoga, LsunYoga, dt;
 var ayanamsa = 0;
 
@@ -321,11 +321,11 @@ corrMoon2[i++] = new corr2(0.13, 3, 0, 0, -1);
 corrMoon2[i++] = new corr2(0.113, 5, 0, 0, 0);
 corrMoon2[i++] = new corr2(0.092, 3, 0, 2, -2);
 
-function daysInMonth(m, y) {
-  var g_days = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-  if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) g_days[1] = 29;
-  return g_days[m];
-}
+// function daysInMonth(m, y) {
+//   var g_days = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+//   if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0) g_days[1] = 29;
+//   return g_days[m];
+// }
 
 //-----------------------------------------------------------------------------------
 // Calculating geotsent p avoid longitude Moon and angular sector p News.
@@ -339,7 +339,7 @@ function moon(jd) {
   let t3 = t * t * t;
 
   // slope travels to the equator
-  var ob = 23.452294 - 0.0130125 * t - 0.00000164 * t2 + 0.000000503 * t3;
+  // var ob = 23.452294 - 0.0130125 * t - 0.00000164 * t2 + 0.000000503 * t3;
   // the average length moon
   var l =
     270.4337361 +
@@ -409,10 +409,10 @@ function moon(jd) {
 
     var lk = 0;
     var lk1 = 0;
-    var sk = 0;
-    var sinp = 0;
-    var nib = 0;
-    var g1c = 0;
+    // var sk = 0;
+    // var sinp = 0;
+    // var nib = 0;
+    // var g1c = 0;
     var i1corr = 1.0 - 6.832e-8 * tdays;
     var i2corr = dgc * dgc;
 
@@ -527,7 +527,7 @@ function sun(jd) {
       (1.882 - 0.016 * t) * Math.sin((57.24 + 150.27 * t) * d2r)) /
       3600.0;
   // Rising sun node len
-  var oms = 259.18 - 1934.142 * t;
+  // var oms = 259.18 - 1934.142 * t;
   // eccentricity orbit sun
   var ex = 0.01675104 - 0.0000418 * t - 0.000000126 * t2;
   // avg length moon
@@ -839,7 +839,6 @@ function mdy2julian(m, d, y) {
 }
 
 function dTime(jd) { 
-  debugger;
   var efdt = [
     124,
     85,
@@ -882,7 +881,7 @@ function dTime(jd) {
     65.7,
     75.5
   ];
-  var s = calData(jd);
+  calData(jd);
   var dgod = kyear + (kmon - 1) / 12 + (kday - 1) / 365.25;
   var t = (jd - 2378497) / 36525; // IN centuries rejection of 1800 bc
   //t = (jd - 2415020)/36525; // in cent rejection of 1900 bc
@@ -1067,7 +1066,7 @@ var panchang = {
     n_yoga = (zyoga * 6) / 80;
     while (n_yoga < 0) n_yoga += 27;
     while (n_yoga > 27) n_yoga -= 27;
-    var n3 = n_yoga;
+    // var n3 = n_yoga;
     n_yoga = Math.floor(n_yoga);
     var s_yoga = yoga(jd, zyoga, tzone);
 
