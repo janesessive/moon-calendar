@@ -1100,6 +1100,7 @@ var panchang = {
     this.Raasi.degreeAbsolute = fix360(Lmoon + ayanamsa);
     this.Raasi.degree = fix30(Lmoon + ayanamsa);
     this.Raasi.name = zn[z];
+    this.Raasi.index = z;
     this.Nakshatra.name = naks[n_naksh];
     this.Nakshatra.start = s_naksh.start;
     this.Nakshatra.end = s_naksh.end;
@@ -1117,8 +1118,41 @@ var panchang = {
     this.Tithi.end = s_tithi.end;
 
     
-    var result = Object.assign({},this) ;
-    delete result.calculate;
+    var result = {};
+
+
+
+
+    result.Ayanamsa = {};
+    result.Raasi = {};
+    result.Nakshatra = {};
+    result.Karna = {};
+    result.Yoga = {};
+    result.Tithi = {};
+    result.Day = {};
+
+
+
+
+    result.Day.name = this.Day.name;
+
+    result.Ayanamsa = lon2dms(ayanamsa);
+    result.Raasi.degreeAbsolute = fix360(Lmoon + ayanamsa);
+    result.Raasi.degree = fix30(Lmoon + ayanamsa);
+    result.Raasi.name = zn[z];
+    result.Raasi.index = z;
+    result.Nakshatra.name = naks[n_naksh];
+    result.Nakshatra.start = s_naksh.start;
+    result.Nakshatra.end = s_naksh.end;
+ result.Karna.name = kar[n_karana];
+    result.Karna.start = s_karana.start;
+    result.Karna.end = s_karana.end;
+result.Yoga.name = yog[n_yoga];
+    result.Yoga.start = s_yoga.start;
+    result.Yoga.end = s_yoga.end;
+result.Tithi.name = tith[n_tithi];
+    result.Tithi.start = s_tithi.start;
+    result.Tithi.end = s_tithi.end;
 
     if (cb) {
       cb();

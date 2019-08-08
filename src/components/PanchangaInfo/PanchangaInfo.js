@@ -3,7 +3,6 @@ import translate from '../../lib/Translator';
 import { formatDate, formatDateToMinutes } from '../../lib/utils';
 
 const PanchangaInfo = (props) => {
-  debugger;
   if (!props.info) {
     return null;
   }

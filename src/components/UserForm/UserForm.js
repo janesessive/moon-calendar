@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import panchang from '../../lib/panchang';
 import PanchangaInfo from '../PanchangaInfo/PanchangaInfo';
 import "react-datepicker/dist/react-datepicker.css";
+import { dataResult } from '../../lib/dataResult';
 
 
 class UserForm extends Component {
@@ -31,7 +32,25 @@ class UserForm extends Component {
 
         let birthDate = this.state.startDate;
         const birthInfo = panchang.calculate(birthDate);
-        this.setState({birthInfo});
+        let bInfo = {...birthInfo};
+        this.setState({birthInfo: bInfo });
+        
+const currentDate = new Date();
+        const currentInfo = panchang.calculate(currentDate);
+        this.setState({currentInfo, currentDate});
+
+        let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
+        if (houseNumber < 0) {
+            houseNumber = houseNumber + 12;
+        }
+
+        houseNumber++;
+        this.setState({houseNumber});
+
+        const description =dataResult.find(d=>d.id === houseNumber);
+        this.setState({description})
+
+
 
       }
 
@@ -73,7 +92,13 @@ class UserForm extends Component {
           >Calculate</button>
           <div>
               <PanchangaInfo info={this.state.birthInfo} currentDate={this.state.startDate}/>
+              <PanchangaInfo info={this.state.currentInfo} currentDate={this.state.currentDate}/>
+
           </div>
+          <h2>Лунный дом: {this.state.houseNumber}</h2>
+        
+          <h3>{this.state.description? this.state.description.title : ""}</h3>
+          <p>{this.state.description? this.state.description.description : ""}</p>
           </div>
         );
       }
