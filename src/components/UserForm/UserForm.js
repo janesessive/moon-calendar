@@ -11,7 +11,8 @@ class UserForm extends Component {
     this.state = {
       currentDate: new Date(),
       birthDate: new Date(),
-      timeZone: null
+      timeZone: null,
+      selectedOption: null
     };
     this.handleChangeCurrentDate = this.handleChangeCurrentDate.bind(this);
     this.handleChangeBirthDate = this.handleChangeBirthDate.bind(this);
@@ -33,6 +34,12 @@ class UserForm extends Component {
     const zoneNumber = e.target.value;
     this.setState({ timeZone: zoneNumber });
   };
+
+  handleOptionChange = e => {
+    this.setState({
+      selectedOption: e.target.value
+    });
+  }
 
   calculateResult = () => {
     let birthDate = this.state.birthDate;
@@ -59,9 +66,10 @@ class UserForm extends Component {
   render() {
     return (
       <div>
+        <div className="container .col-sm-2">
         <form>
           <div className="form-group">
-            <label htmlFor="currentDate">Дата и время Рождения: </label>
+            <label htmlFor="currentDate">День прогноза: </label>
             <div>
               <DatePicker
                 className="form-control"
@@ -89,20 +97,42 @@ class UserForm extends Component {
             <label htmlFor="timeZone">Часовой пояс: </label>
             <input
               className="form-control"
+              style={{ margin: "auto", width: "15%"}}
               id="timeZone"
               type="number"
               onChange={this.onTimeZoneChanged}
               value={this.state.timeZone}
             />
 
-            <label>
+            {/* <label>
               <input type="checkbox" value="west" name="zone" id="zone_west" />
               West
             </label>
             <label>
               <input type="checkbox" value="east" name="zone" id="zone_east" />
               East
-            </label>
+            </label> */}
+            <form>
+    <div className="radio">
+      <label>
+        <input 
+        type="radio" 
+        value="west" checked={this.state.selectedOption === 'west'}
+        onChange={this.handleOptionChange} />
+        West
+      </label>
+    </div>
+    <div className="radio">
+      <label>
+        <input 
+        type="radio" 
+        value="east" 
+        checked={this.state.selectedOption === 'east'}
+        onChange={this.handleOptionChange} />
+        East
+      </label>
+    </div>
+  </form>
           </div>
         </form>
         <button
@@ -112,6 +142,7 @@ class UserForm extends Component {
         >
           Calculate
         </button>
+      </ div>
         <div>
           <PanchangaInfo
             info={this.state.birthInfo}
