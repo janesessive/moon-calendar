@@ -4,6 +4,8 @@ import panchang from "../../lib/panchang";
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
 import { dataResult } from "../../lib/dataResult";
+import moment from 'moment';
+const key = 'panchanga-data';
 
 class UserForm extends Component {
   constructor(props) {
@@ -11,11 +13,19 @@ class UserForm extends Component {
     this.state = {
       currentDate: new Date(),
       birthDate: new Date(),
-      timeZone: null,
-      selectedOption: null
+      timeZone: '',
+      selectedOption: ''
     };
     this.handleChangeCurrentDate = this.handleChangeCurrentDate.bind(this);
     this.handleChangeBirthDate = this.handleChangeBirthDate.bind(this);
+  }
+
+  componentDidMount () {
+    let item = JSON.parse(localStorage.getItem(key));
+    if (item && item.birthDate && item.timeZone) {
+      const birthDate = new Date(item.birthDate);
+            this.setState({birthDate: birthDate, timeZone: item.timeZone}, () => {this.calculateResult()})
+    } 
   }
 
   handleChangeCurrentDate(date) {
@@ -41,9 +51,32 @@ class UserForm extends Component {
     });
   }
 
+  saveData = () => {
+    debugger;
+    let myObj = { birthDate: this.state.birthDate,
+    timeZone: this.state.timeZone};
+    console.log(myObj);
+    localStorage.setItem(key, JSON.stringify(myObj));
+
+  }
+
   calculateResult = () => {
-    let birthDate = this.state.birthDate;
-    const birthInfo = panchang.calculate(birthDate);
+    
+    let m = moment(this.state.birthDate);
+    console.log(m.format());
+    let timeZone= this.state.timeZone;
+    timeZone = parseInt(timeZone);
+    if (this.state.selectedOption==="east") {
+      
+      timeZone = timeZone*(-1);
+    }
+
+      m.add(timeZone, 'hours');
+      console.log("utc", m.format());
+      let utcDate = m.toDate();
+
+    
+    const birthInfo = panchang.calculate(utcDate);
     let bInfo = { ...birthInfo };
     this.setState({ birthInfo: bInfo });
 
@@ -97,12 +130,13 @@ class UserForm extends Component {
             <label htmlFor="timeZone">Часовой пояс: </label>
             <input
               className="form-control"
-              style={{ margin: "auto", width: "15%"}}
+              style={{width: "10%"}}
               id="timeZone"
               type="number"
               onChange={this.onTimeZoneChanged}
               value={this.state.timeZone}
             />
+            
 
             {/* <label>
               <input type="checkbox" value="west" name="zone" id="zone_west" />
@@ -131,6 +165,11 @@ class UserForm extends Component {
         onChange={this.handleOptionChange} />
         East
       </label>
+    </div>
+    <div>
+    <button type="button"
+          class="btn btn-success"
+          onClick={this.saveData}>Save data</button>
     </div>
   </form>
           </div>
