@@ -22,9 +22,11 @@ class UserForm extends Component {
 
   componentDidMount () {
     let item = JSON.parse(localStorage.getItem(key));
-    if (item && item.birthDate && item.timeZone) {
+    if (item && item.birthDate && item.timeZone && item.selectedOption) {
       const birthDate = new Date(item.birthDate);
-            this.setState({birthDate: birthDate, timeZone: item.timeZone}, () => {this.calculateResult()})
+            this.setState({birthDate: birthDate, 
+                           timeZone: item.timeZone, 
+                           selectedOption: item.selectedOption}, () => {this.calculateResult()})
     } 
   }
 
@@ -52,9 +54,9 @@ class UserForm extends Component {
   }
 
   saveData = () => {
-    debugger;
+    
     let myObj = { birthDate: this.state.birthDate,
-    timeZone: this.state.timeZone};
+    timeZone: this.state.timeZone, selectedOption: this.state.selectedOption};
     console.log(myObj);
     localStorage.setItem(key, JSON.stringify(myObj));
 
@@ -168,7 +170,7 @@ class UserForm extends Component {
     </div>
     <div>
     <button type="button"
-          class="btn btn-success"
+          className="btn btn-success"
           onClick={this.saveData}>Save data</button>
     </div>
   </form>
@@ -176,7 +178,7 @@ class UserForm extends Component {
         </form>
         <button
           type="button"
-          class="btn btn-primary"
+          className="btn btn-primary"
           onClick={this.calculateResult}
         >
           Calculate
