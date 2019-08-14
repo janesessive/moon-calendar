@@ -47,9 +47,24 @@ const PanchangaInfo = props => {
             type="text"
             readonly
             className="form-control-plaintext"
-            id="day"
+            id="moon"
             value={translate(props.info.Raasi.name)}
           />
+          <input
+            type="text"
+            readonly
+            className="form-control-plaintext"
+            id="moon-degree"
+            value={props.info.Raasi.degreeAbsolute}
+          />
+          <input
+            type="text"
+            readonly
+            className="form-control-plaintext"
+            id="moon-next-sign"
+            value={props.info.Raasi.nextSign}
+          />
+          <pre>{JSON.stringify(props.info.Raasi, null,2)}</pre>
         </div>
       </div>
       <div className="form-group row" >
