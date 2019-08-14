@@ -4,8 +4,8 @@ import panchang from "../../lib/panchang";
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
 import { dataResult } from "../../lib/dataResult";
-import moment from 'moment';
-const key = 'panchanga-data';
+import moment from "moment";
+const key = "panchanga-data";
 
 class UserForm extends Component {
   constructor(props) {
@@ -13,21 +13,28 @@ class UserForm extends Component {
     this.state = {
       currentDate: new Date(),
       birthDate: new Date(),
-      timeZone: '',
-      selectedOption: ''
+      timeZone: "",
+      selectedOption: ""
     };
     this.handleChangeCurrentDate = this.handleChangeCurrentDate.bind(this);
     this.handleChangeBirthDate = this.handleChangeBirthDate.bind(this);
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let item = JSON.parse(localStorage.getItem(key));
     if (item && item.birthDate && item.timeZone && item.selectedOption) {
       const birthDate = new Date(item.birthDate);
-            this.setState({birthDate: birthDate, 
-                           timeZone: item.timeZone, 
-                           selectedOption: item.selectedOption}, () => {this.calculateResult()})
-    } 
+      this.setState(
+        {
+          birthDate: birthDate,
+          timeZone: item.timeZone,
+          selectedOption: item.selectedOption
+        },
+        () => {
+          this.calculateResult();
+        }
+      );
+    }
   }
 
   handleChangeCurrentDate(date) {
@@ -51,33 +58,31 @@ class UserForm extends Component {
     this.setState({
       selectedOption: e.target.value
     });
-  }
+  };
 
   saveData = () => {
-    
-    let myObj = { birthDate: this.state.birthDate,
-    timeZone: this.state.timeZone, selectedOption: this.state.selectedOption};
+    let myObj = {
+      birthDate: this.state.birthDate,
+      timeZone: this.state.timeZone,
+      selectedOption: this.state.selectedOption
+    };
     console.log(myObj);
     localStorage.setItem(key, JSON.stringify(myObj));
-
-  }
+  };
 
   calculateResult = () => {
-    
     let m = moment(this.state.birthDate);
     console.log(m.format());
-    let timeZone= this.state.timeZone;
+    let timeZone = this.state.timeZone;
     timeZone = parseInt(timeZone);
-    if (this.state.selectedOption==="east") {
-      
-      timeZone = timeZone*(-1);
+    if (this.state.selectedOption === "east") {
+      timeZone = timeZone * -1;
     }
 
-      m.add(timeZone, 'hours');
-      console.log("utc", m.format());
-      let utcDate = m.toDate();
+    m.add(timeZone, "hours");
+    console.log("utc", m.format());
+    let utcDate = m.toDate();
 
-    
     const birthInfo = panchang.calculate(utcDate);
     let bInfo = { ...birthInfo };
     this.setState({ birthInfo: bInfo });
@@ -100,47 +105,47 @@ class UserForm extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container .col-sm-2">
-        <form>
-          <div className="form-group">
-            <label htmlFor="currentDate">День прогноза: </label>
-            <div>
-              <DatePicker
-                className="form-control"
-                selected={this.state.currentDate}
-                onChange={this.handleChangeCurrentDate}
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="birthDate">Дата и время Рождения: </label>
-            <div>
-              <DatePicker
-                className="form-control"
-                selected={this.state.birthDate}
-                onChange={this.handleChangeBirthDate}
-                showTimeSelect
-                timeFormat="HH:mm"
-                timeIntervals={15}
-                dateFormat="MMMM d, yyyy h:mm aa"
-                timeCaption="time"
-              />
-            </div>
-          </div>
-          <div className="form-group">
-            <label htmlFor="timeZone">Часовой пояс: </label>
-            <input
-              className="form-control"
-              style={{width: "10%"}}
-              id="timeZone"
-              type="number"
-              onChange={this.onTimeZoneChanged}
-              value={this.state.timeZone}
-            />
-            
+      <div className="containter">
+        <div class="row">
+          <div className="col-sm-3">
+            <form className="container border">
+              <div className="form-group">
+                <label htmlFor="currentDate">День прогноза: </label>
+                <div>
+                  <DatePicker
+                    className="form-control"
+                    selected={this.state.currentDate}
+                    onChange={this.handleChangeCurrentDate}
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="birthDate">Дата и время Рождения: </label>
+                <div>
+                  <DatePicker
+                    className="form-control"
+                    selected={this.state.birthDate}
+                    onChange={this.handleChangeBirthDate}
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    timeCaption="time"
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label htmlFor="timeZone">Часовой пояс: </label>
+                <input
+                  className="form-control"
+                  style={{ width: "60px" }}
+                  id="timeZone"
+                  type="number"
+                  onChange={this.onTimeZoneChanged}
+                  value={this.state.timeZone}
+                />
 
-            {/* <label>
+                {/* <label>
               <input type="checkbox" value="west" name="zone" id="zone_west" />
               West
             </label>
@@ -148,62 +153,83 @@ class UserForm extends Component {
               <input type="checkbox" value="east" name="zone" id="zone_east" />
               East
             </label> */}
-            <form>
-    <div className="radio">
-      <label>
-        <input 
-        type="radio" 
-        value="west" checked={this.state.selectedOption === 'west'}
-        onChange={this.handleOptionChange} />
-        West
-      </label>
-    </div>
-    <div className="radio">
-      <label>
-        <input 
-        type="radio" 
-        value="east" 
-        checked={this.state.selectedOption === 'east'}
-        onChange={this.handleOptionChange} />
-        East
-      </label>
-    </div>
-    <div>
-    <button type="button"
-          className="btn btn-success"
-          onClick={this.saveData}>Save data</button>
-    </div>
-  </form>
-          </div>
-        </form>
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={this.calculateResult}
-        >
-          Calculate
-        </button>
-      </ div>
-        <div>
-          <PanchangaInfo
-            info={this.state.birthInfo}
-            currentDate={this.state.birthDate}
-          />
-          <PanchangaInfo
-            info={this.state.currentInfo}
-            currentDate={this.state.currentDate}
-          />
-        </div>
-        {this.state.houseNumber ? (
-          <h2>Лунный дом: {this.state.houseNumber}</h2>
-        ) : (
-          ""
-        )}
 
-        <h3>{this.state.description ? this.state.description.title : ""}</h3>
-        <p>
-          {this.state.description ? this.state.description.description : ""}
-        </p>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="west"
+                      checked={this.state.selectedOption === "west"}
+                      onChange={this.handleOptionChange}
+                    />
+                    West
+                  </label>
+                </div>
+                <div className="radio">
+                  <label>
+                    <input
+                      type="radio"
+                      value="east"
+                      checked={this.state.selectedOption === "east"}
+                      onChange={this.handleOptionChange}
+                    />
+                    East
+                  </label>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={this.saveData}
+                  >
+                    Save data
+                  </button>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={this.calculateResult}
+              >
+                Calculate
+              </button>
+            </form>
+          </div>
+          <div className="col-sm-3">
+            <PanchangaInfo
+              info={this.state.birthInfo}
+              currentDate={this.state.birthDate}
+            />
+            </div>
+            <div className="col-sm-3">
+            <PanchangaInfo
+              info={this.state.currentInfo}
+              currentDate={this.state.currentDate}
+            />
+          </div>
+          <div
+          className="col-sm-3"
+          style={{
+            width: "800px",
+            margin: "0 auto",
+            border: "1px solid lightgray",
+            padding:'20px'
+          }}
+        >
+          {this.state.houseNumber ? (
+            <h2>Лунный дом: {this.state.houseNumber}</h2>
+          ) : (
+            ""
+          )}
+
+          <h3>{this.state.description ? this.state.description.title : ""}</h3>
+          <p>
+            {this.state.description ? this.state.description.description : ""}
+          </p>
+        </div>
+        </div>
+
+        
       </div>
     );
   }
