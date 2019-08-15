@@ -16,6 +16,7 @@ const PanchangaInfo = props => {
         </label>
         <div class="col-sm-9">
           <input
+          style={{fontWeight: "bold", color: "darkblue"}}
             type="text"
             readonly
             className="form-control-plaintext"
@@ -44,6 +45,7 @@ const PanchangaInfo = props => {
         </label>
         <div class="col-sm-9">
           <input
+          style={{fontWeight: "bold", color: "darkblue"}}
             type="text"
             readonly
             className="form-control-plaintext"
@@ -64,7 +66,7 @@ const PanchangaInfo = props => {
             id="moon-next-sign"
             value={props.info.Raasi.nextSign}
           />
-          <pre>{JSON.stringify(props.info.Raasi, null,2)}</pre>
+          {/* <pre>{JSON.stringify(props.info.Raasi, null,2)}</pre> */}
         </div>
       </div>
       <div className="form-group row" >
@@ -73,6 +75,7 @@ const PanchangaInfo = props => {
         </label>
         <div class="col-sm-9">
           <input
+          style={{fontWeight: "bold", color: "darkblue"}}
             type="text"
             readonly
             className="form-control-plaintext"

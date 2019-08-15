@@ -116,6 +116,11 @@ class UserForm extends Component {
                     className="form-control"
                     selected={this.state.currentDate}
                     onChange={this.handleChangeCurrentDate}
+                    showTimeSelect
+    timeFormat="HH:mm"
+    timeIntervals={15}
+    dateFormat="MMMM d, yyyy h:mm aa"
+    timeCaption="time"
                   />
                 </div>
               </div>
@@ -134,26 +139,20 @@ class UserForm extends Component {
                   />
                 </div>
               </div>
-              <div className="form-group">
-                <label htmlFor="timeZone">Часовой пояс: </label>
-                <input
-                  className="form-control"
-                  style={{ width: "60px" }}
-                  id="timeZone"
-                  type="number"
-                  onChange={this.onTimeZoneChanged}
-                  value={this.state.timeZone}
-                />
+              <div className="form-row">
+                <div class="col-auto">
+                  <label htmlFor="timeZone">Часовой пояс: </label>
+                  <input
+                    className="form-control"
+                    style={{ width: "60px" }}
+                    id="timeZone"
+                    type="number"
+                    onChange={this.onTimeZoneChanged}
+                    value={this.state.timeZone}
+                  />
+                </div>
 
-                {/* <label>
-              <input type="checkbox" value="west" name="zone" id="zone_west" />
-              West
-            </label>
-            <label>
-              <input type="checkbox" value="east" name="zone" id="zone_east" />
-              East
-            </label> */}
-
+                {/* 
                 <div className="radio">
                   <label>
                     <input
@@ -164,8 +163,7 @@ class UserForm extends Component {
                     />
                     West
                   </label>
-                </div>
-                <div className="radio">
+                
                   <label>
                     <input
                       type="radio"
@@ -175,61 +173,98 @@ class UserForm extends Component {
                     />
                     East
                   </label>
+                </div> */}
+
+                <div class="col-auto">
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="east"
+                      value="east"
+                      checked={this.state.selectedOption === "east"}
+                      onChange={this.handleOptionChange}
+                    />
+                    <label className="form-check-label" for="east">
+                      east
+                    </label>
+                  </div>
+                  <div className="form-check form-check-inline">
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      id="west"
+                      value="west"
+                      checked={this.state.selectedOption === "west"}
+                      onChange={this.handleOptionChange}
+                    />
+                    <label className="form-check-label" for="west">
+                      west
+                    </label>
+                  </div>
                 </div>
+
                 <div>
                   <button
+                    style={{ margin: "10px" }}
                     type="button"
                     className="btn btn-success"
                     onClick={this.saveData}
                   >
                     Save data
                   </button>
-                </div>
-              </div>
+                
+              
               <button
+                style={{ margin: "10px" }}
                 type="button"
                 className="btn btn-primary"
                 onClick={this.calculateResult}
               >
                 Calculate
               </button>
+              </div>
+              </div>
             </form>
           </div>
+
           <div className="col-sm-3">
             <PanchangaInfo
               info={this.state.birthInfo}
               currentDate={this.state.birthDate}
             />
-            </div>
-            <div className="col-sm-3">
+          </div>
+          <div className="col-sm-3">
             <PanchangaInfo
               info={this.state.currentInfo}
               currentDate={this.state.currentDate}
             />
           </div>
           <div
-          className="col-sm-3"
-          style={{
-            width: "800px",
-            margin: "0 auto",
-            border: "1px solid lightgray",
-            padding:'20px'
-          }}
-        >
-          {this.state.houseNumber ? (
-            <h2>Лунный дом: {this.state.houseNumber}</h2>
-          ) : (
-            ""
-          )}
+            className="col-sm-3"
+            style={{
+              width: "800px",
+              margin: "0 auto",
+              border: "1px solid lightgray",
+              padding: "20px"
+            }}
+          >
+            {this.state.houseNumber ? (
+              <h2>Лунный дом: {this.state.houseNumber}</h2>
+            ) : (
+              ""
+            )}
 
-          <h3>{this.state.description ? this.state.description.title : ""}</h3>
-          <p>
-            {this.state.description ? this.state.description.description : ""}
-          </p>
+            <h3>
+              {this.state.description ? this.state.description.title : ""}
+            </h3>
+            <p>
+              {this.state.description ? this.state.description.description : ""}
+            </p>
+          </div>
         </div>
-        </div>
-
-        
       </div>
     );
   }
