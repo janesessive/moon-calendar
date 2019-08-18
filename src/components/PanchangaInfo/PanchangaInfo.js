@@ -59,13 +59,24 @@ const PanchangaInfo = props => {
             id="moon-degree"
             value={props.info.Raasi.degreeAbsolute}
           />
+            {props.info.Raasi.firstSignDate?
           <input
             type="text"
             readonly
             className="form-control-plaintext"
             id="moon-next-sign"
-            value={props.info.Raasi.nextSign}
-          />
+            value={formatDateToMinutes(props.info.Raasi.firstSignDate)}
+            
+          />:null}
+          {props.info.Raasi.nextSignDate?
+          <input
+            type="text"
+            readonly
+            className="form-control-plaintext"
+            id="moon-next-sign"
+            value={formatDateToMinutes(props.info.Raasi.nextSignDate)}
+            
+          />:null}
           {/* <pre>{JSON.stringify(props.info.Raasi, null,2)}</pre> */}
         </div>
       </div>

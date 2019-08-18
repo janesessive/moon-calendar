@@ -70,6 +70,37 @@ class UserForm extends Component {
     localStorage.setItem(key, JSON.stringify(myObj));
   };
 
+  calculateNextSignStart = (utcDate, info)=>{
+    const pathToNextSign = 30 - info.Raasi.degreeAbsolute % 30;
+    return this.findTransitDate(utcDate, info, pathToNextSign);
+  };
+
+  calculateFirstSignStart = (utcDate, info)=>{
+    const pathToNextSign = -1 * info.Raasi.degreeAbsolute % 30;
+    return this.findTransitDate(utcDate, info, pathToNextSign);
+    
+  };
+
+  findTransitDate = (utcDate, info, pathToNextSign)=>{
+    const begins = new Date(new Date(utcDate).setUTCHours(0,0,0,0));
+    const ends = new Date(new Date(begins).setDate(begins.getDate()+1));       
+    const birthInfo1 = panchang.calculate(begins);
+    const birthInfo2 = panchang.calculate(ends);
+    let fullDayPath = birthInfo2.Raasi.degreeAbsolute - birthInfo1.Raasi.degreeAbsolute;
+    if(fullDayPath < 0) fullDayPath+=360;
+    const dayMilliSeconds = 86400000.00;
+    const moonSpeed = fullDayPath / dayMilliSeconds;
+    const ms = pathToNextSign / moonSpeed
+    const nextSignDate = new Date(utcDate.getTime() + ms);
+    var result = panchang.calculate(nextSignDate);
+    if(result.Raasi.degree > 0 ){
+      var timeToReduce = result.Raasi.degree / moonSpeed;
+      return new Date(nextSignDate.getTime() - timeToReduce);
+
+    }
+    
+    return nextSignDate;    
+  }
   calculateResult = () => {
     let m = moment(this.state.birthDate);
     console.log(m.format());
@@ -89,6 +120,12 @@ class UserForm extends Component {
 
     let currentDate = this.state.currentDate;
     const currentInfo = panchang.calculate(currentDate);
+
+    var firstDate = this.calculateFirstSignStart(currentDate, currentInfo);
+    
+    var result = this.calculateNextSignStart(currentDate, currentInfo);
+    currentInfo.Raasi.nextSignDate = result;
+    currentInfo.Raasi.firstSignDate = firstDate;
     this.setState({ currentInfo, currentDate });
 
     let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
