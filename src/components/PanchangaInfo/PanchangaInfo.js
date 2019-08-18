@@ -52,13 +52,13 @@ const PanchangaInfo = props => {
             id="moon"
             value={translate(props.info.Raasi.name)}
           />
-          <input
+          {/* <input
             type="text"
             readonly
             className="form-control-plaintext"
             id="moon-degree"
             value={props.info.Raasi.degreeAbsolute}
-          />
+          /> */}
             {props.info.Raasi.firstSignDate?
           <input
             type="text"
