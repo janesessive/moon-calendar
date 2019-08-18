@@ -70,37 +70,56 @@ class UserForm extends Component {
     localStorage.setItem(key, JSON.stringify(myObj));
   };
 
-  calculateNextSignStart = (utcDate, info)=>{
-    const pathToNextSign = 30 - info.Raasi.degreeAbsolute % 30;
-    return this.findTransitDate(utcDate, info, pathToNextSign);
+  calculateNextSignStart = (utcDate, info) => {
+    const pathToNextSign = 30 - (info.Raasi.degreeAbsolute % 30);
+    return this.findTransitDate(utcDate, info, pathToNextSign, true);
   };
 
-  calculateFirstSignStart = (utcDate, info)=>{
-    const pathToNextSign = -1 * info.Raasi.degreeAbsolute % 30;
-    return this.findTransitDate(utcDate, info, pathToNextSign);
-    
+  calculateFirstSignStart = (utcDate, info) => {
+    const pathToNextSign = (-1 * info.Raasi.degreeAbsolute) % 30;
+    return this.findTransitDate(utcDate, info, pathToNextSign, false);
   };
 
-  findTransitDate = (utcDate, info, pathToNextSign)=>{
-    const begins = new Date(new Date(utcDate).setUTCHours(0,0,0,0));
-    const ends = new Date(new Date(begins).setDate(begins.getDate()+1));       
+  findTransitDate = (utcDate, info, pathToNextSign, isNextSignSearch) => {
+    const begins = new Date(new Date(utcDate).setUTCHours(0, 0, 0, 0));
+    const ends = new Date(new Date(begins).setDate(begins.getDate() + 1));
     const birthInfo1 = panchang.calculate(begins);
     const birthInfo2 = panchang.calculate(ends);
-    let fullDayPath = birthInfo2.Raasi.degreeAbsolute - birthInfo1.Raasi.degreeAbsolute;
-    if(fullDayPath < 0) fullDayPath+=360;
-    const dayMilliSeconds = 86400000.00;
+    let fullDayPath =
+      birthInfo2.Raasi.degreeAbsolute - birthInfo1.Raasi.degreeAbsolute;
+    if (fullDayPath < 0) fullDayPath += 360;
+    const dayMilliSeconds = 86400000.0;
     const moonSpeed = fullDayPath / dayMilliSeconds;
-    const ms = pathToNextSign / moonSpeed
+    const ms = pathToNextSign / moonSpeed;
     const nextSignDate = new Date(utcDate.getTime() + ms);
-    var result = panchang.calculate(nextSignDate);
-    if(result.Raasi.degree > 0 ){
-      var timeToReduce = result.Raasi.degree / moonSpeed;
-      return new Date(nextSignDate.getTime() - timeToReduce);
-
+    const result = panchang.calculate(nextSignDate);
+    let previousRasiIndex = info.Raasi.index - 1;
+    if (previousRasiIndex < 0) previousRasiIndex += 12;
+    let nextRasiIndex = info.Raasi.index + 1;
+    if (nextRasiIndex > 11) nextRasiIndex -= 12;
+    const currentRasiIndex = info.Raasi.index;
+    if (isNextSignSearch) {
+      if (result.Raasi.index === currentRasiIndex) {
+        var timeToAdd = (30 - result.Raasi.degree) / moonSpeed;
+        return new Date(nextSignDate.getTime() + timeToAdd);
+      } else if (result.Raasi.index === nextRasiIndex) {
+        var timeToReduce = result.Raasi.degree / moonSpeed;
+        return new Date(nextSignDate.getTime() - timeToReduce);
+      }
+    } else {
+      if (result.Raasi.index === currentRasiIndex) {
+        console.log(result, info, "correction higher");
+        var timeToReduce = result.Raasi.degree / moonSpeed;
+        return new Date(nextSignDate.getTime() - timeToReduce);
+      } else if (result.Raasi.index === previousRasiIndex) {
+        console.log("less than correct time correction");
+        var timeToReduce = (30 - result.Raasi.degree) / moonSpeed;
+        return new Date(nextSignDate.getTime() - timeToReduce);
+      }
     }
-    
-    return nextSignDate;    
-  }
+    //TODO: possible bug with previous date on negative correction
+    return nextSignDate;
+  };
   calculateResult = () => {
     let m = moment(this.state.birthDate);
     console.log(m.format());
@@ -122,7 +141,7 @@ class UserForm extends Component {
     const currentInfo = panchang.calculate(currentDate);
 
     var firstDate = this.calculateFirstSignStart(currentDate, currentInfo);
-    
+
     var result = this.calculateNextSignStart(currentDate, currentInfo);
     currentInfo.Raasi.nextSignDate = result;
     currentInfo.Raasi.firstSignDate = firstDate;
@@ -154,10 +173,10 @@ class UserForm extends Component {
                     selected={this.state.currentDate}
                     onChange={this.handleChangeCurrentDate}
                     showTimeSelect
-    timeFormat="HH:mm"
-    timeIntervals={15}
-    dateFormat="MMMM d, yyyy h:mm aa"
-    timeCaption="time"
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    dateFormat="MMMM d, yyyy h:mm aa"
+                    timeCaption="time"
                   />
                 </div>
               </div>
@@ -252,17 +271,16 @@ class UserForm extends Component {
                   >
                     Save data
                   </button>
-                
-              
-              <button
-                style={{ margin: "10px" }}
-                type="button"
-                className="btn btn-primary"
-                onClick={this.calculateResult}
-              >
-                Calculate
-              </button>
-              </div>
+
+                  <button
+                    style={{ margin: "10px" }}
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={this.calculateResult}
+                  >
+                    Calculate
+                  </button>
+                </div>
               </div>
             </form>
           </div>
