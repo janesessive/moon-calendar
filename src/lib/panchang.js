@@ -1101,7 +1101,7 @@ var panchang = {
     this.Raasi.degree = fix30(Lmoon + ayanamsa);
     this.Raasi.name = zn[z];
     this.Raasi.index = z;
-    debugger;
+    
     this.Raasi.nextSign = (z+1)*30;
     this.Nakshatra.name = naks[n_naksh];
     this.Nakshatra.index = n_naksh; 
