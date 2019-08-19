@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import panchang from "../../lib/panchang";
+
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
 import { dataResult } from "../../lib/dataResult";
 import moment from "moment";
+import { applyTimeZone, calculatePanchanga } from "../../services/astro";
 const key = "panchanga-data";
 
 class UserForm extends Component {
@@ -70,82 +71,16 @@ class UserForm extends Component {
     localStorage.setItem(key, JSON.stringify(myObj));
   };
 
-  calculateNextSignStart = (utcDate, info) => {
-    const pathToNextSign = 30 - (info.Raasi.degreeAbsolute % 30);
-    return this.findTransitDate(utcDate, info, pathToNextSign, true);
-  };
 
-  calculateFirstSignStart = (utcDate, info) => {
-    const pathToNextSign = (-1 * info.Raasi.degreeAbsolute) % 30;
-    return this.findTransitDate(utcDate, info, pathToNextSign, false);
-  };
-
-  findTransitDate = (utcDate, info, pathToNextSign, isNextSignSearch) => {
-    const begins = new Date(new Date(utcDate).setUTCHours(0, 0, 0, 0));
-    const ends = new Date(new Date(begins).setDate(begins.getDate() + 1));
-    const birthInfo1 = panchang.calculate(begins);
-    const birthInfo2 = panchang.calculate(ends);
-    let fullDayPath =
-      birthInfo2.Raasi.degreeAbsolute - birthInfo1.Raasi.degreeAbsolute;
-    if (fullDayPath < 0) fullDayPath += 360;
-    const dayMilliSeconds = 86400000.0;
-    const moonSpeed = fullDayPath / dayMilliSeconds;
-    const ms = pathToNextSign / moonSpeed;
-    const nextSignDate = new Date(utcDate.getTime() + ms);
-    const result = panchang.calculate(nextSignDate);
-    let previousRasiIndex = info.Raasi.index - 1;
-    if (previousRasiIndex < 0) previousRasiIndex += 12;
-    let nextRasiIndex = info.Raasi.index + 1;
-    if (nextRasiIndex > 11) nextRasiIndex -= 12;
-    const currentRasiIndex = info.Raasi.index;
-    if (isNextSignSearch) {
-      if (result.Raasi.index === currentRasiIndex) {
-        var timeToAdd = (30 - result.Raasi.degree) / moonSpeed;
-        return new Date(nextSignDate.getTime() + timeToAdd);
-      } else if (result.Raasi.index === nextRasiIndex) {
-        var timeToReduce = result.Raasi.degree / moonSpeed;
-        return new Date(nextSignDate.getTime() - timeToReduce);
-      }
-    } else {
-      if (result.Raasi.index === currentRasiIndex) {
-        console.log(result, info, "correction higher");
-        var timeToReduce = result.Raasi.degree / moonSpeed;
-        return new Date(nextSignDate.getTime() - timeToReduce);
-      } else if (result.Raasi.index === previousRasiIndex) {
-        console.log("less than correct time correction");
-        var timeToReduce = (30 - result.Raasi.degree) / moonSpeed;
-        return new Date(nextSignDate.getTime() - timeToReduce);
-      }
-    }
-    //TODO: possible bug with previous date on negative correction
-    return nextSignDate;
-  };
   calculateResult = () => {
-    let m = moment(this.state.birthDate);
-    console.log(m.format());
-    let timeZone = this.state.timeZone;
-    timeZone = parseInt(timeZone);
-    if (this.state.selectedOption === "east") {
-      timeZone = timeZone * -1;
-    }
-
-    m.add(timeZone, "hours");
-    console.log("utc", m.format());
-    let utcDate = m.toDate();
-
-    const birthInfo = panchang.calculate(utcDate);
-    let bInfo = { ...birthInfo };
-    this.setState({ birthInfo: bInfo });
-
-    let currentDate = this.state.currentDate;
-    const currentInfo = panchang.calculate(currentDate);
-
-    var firstDate = this.calculateFirstSignStart(currentDate, currentInfo);
-
-    var result = this.calculateNextSignStart(currentDate, currentInfo);
-    currentInfo.Raasi.nextSignDate = result;
-    currentInfo.Raasi.firstSignDate = firstDate;
-    this.setState({ currentInfo, currentDate });
+     
+    const utcDate = applyTimeZone(this.state.birthDate, this.state.timeZone, this.state.selectedOption);
+    
+    const birthInfo = calculatePanchanga(utcDate);
+    const currentInfo = calculatePanchanga(this.state.currentDate);
+    //TODO: call calculate here
+    this.setState({ birthInfo, currentInfo });
+    
 
     let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
     if (houseNumber < 0) {
