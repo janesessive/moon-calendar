@@ -103,7 +103,7 @@ class TransitInfo extends Component {
           </div>
         </form>
         {this.state.transits.length===0? null :
-        <table>
+        <table className="table table-striped">
         <thead>
     <tr>
       <th scope="col">Зодиак</th>
