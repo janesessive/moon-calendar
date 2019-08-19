@@ -15,18 +15,15 @@ class Layout extends Component {
                 <header>
                     <nav>
                         <ul>
-                            <li><a href="/" 
-                            activeClassName="my-active"
-                            activeStyle={{
-                                color: '#fa923f',
-                                textDecoration: 'underline'
-                            }}>Info</a></li>
+                            <li><a href="/">Info</a></li>
                             <li><a href="/transit">Transit Information</a></li>
                         </ul>
                     </nav>
                 </header>
+                <div>
                 <Route path="/" exact component={UserForm}/>
                 <Route path="/transit" component={TransitInfo}/>
+                </div>
         </div>
         );
   }
