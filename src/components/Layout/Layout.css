@@ -1,23 +1,9 @@
-.Layout ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    text-align: center;
-}
+/* nav {
+    margin-bottom: 50px;
+    
+    
 
-.Layout li {
-    display: inline-block;
-    margin: 20px;
-}
-
-.Layout a {
-    text-decoration: none;
-    color: black;
-}
-
-.Layout a:hover,
-.Layout a:active,
-.Layout a.active {
-    color: #fa923f;
+} */
+.content {
+    margin-top: 80px;
 }
