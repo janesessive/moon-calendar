@@ -99,7 +99,7 @@ class UserForm extends Component {
       <div className="containter">
         <div class="row">
           <div className="col-sm-3">
-            <form className="container border">
+            <form className="container border border-secondary rounded">
               <div className="form-group">
                 <label htmlFor="currentDate">День прогноза: </label>
                 <div>
@@ -237,7 +237,7 @@ class UserForm extends Component {
             style={{
               width: "800px",
               margin: "0 auto",
-              border: "1px solid lightgray",
+              borderLeft: "1px solid lightgray",
               padding: "20px"
             }}
           >
