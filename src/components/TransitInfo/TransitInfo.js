@@ -110,7 +110,7 @@ class TransitInfo extends Component {
     <tr>
       <th scope="col">Зодиак</th>
       <th scope="col">Начало</th>
-      {/* <th scope="col">Конец</th> */}
+      <th scope="col">Долгота</th>
      
    </tr>
   </thead>
@@ -119,7 +119,7 @@ class TransitInfo extends Component {
         return (<tr key={transit.date}>
          <td>{transit.name}</td>
          <td>{formatDateToMinutes(transit.dateFrom)}</td>
-         {/* <td>{formatDateToMinutes(transit.dateTo)}</td> */}
+         <td>{transit.lon}</td>
          </tr>)
          
 
