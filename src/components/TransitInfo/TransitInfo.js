@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 // import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
+import { findMoonTransits } from "../../services/astro";
 // import moment from "moment";
 // const key = "panchanga-data";
 
@@ -32,6 +33,7 @@ class TransitInfo extends Component {
   }
 
   calculate = (dateFrom, dateTo) => {
+    return findMoonTransits(dateFrom, dateTo);
     return [
       {
         name: "Овен",
@@ -108,16 +110,16 @@ class TransitInfo extends Component {
     <tr>
       <th scope="col">Зодиак</th>
       <th scope="col">Начало</th>
-      <th scope="col">Конец</th>
+      {/* <th scope="col">Конец</th> */}
      
    </tr>
   </thead>
           <tbody>
         {this.state.transits.map(transit => {
-        return (<tr key={transit.name}>
+        return (<tr key={transit.date}>
          <td>{transit.name}</td>
          <td>{formatDateToMinutes(transit.dateFrom)}</td>
-         <td>{formatDateToMinutes(transit.dateTo)}</td>
+         {/* <td>{formatDateToMinutes(transit.dateTo)}</td> */}
          </tr>)
          
 
