@@ -1,5 +1,6 @@
-import panchang from "../lib/panchang";
+import panchang, { lon2dms } from "../lib/panchang";
 import { rasiNames } from "../lib/astroNames";
+
 
 export const applyTimeZone = (date, timeZoneHours, timeZoneOption) => {
   timeZoneHours = parseInt(timeZoneHours);
@@ -58,10 +59,10 @@ const getMoonSpeed24h = firstDate => {
 };
 
 function correction(nextSignDate, currentRasiIndex, isNextSignSearch) {
-  console.log("Correction ...");
+  
   const result = panchang.calculate(nextSignDate);
   const Moon = result.Raasi;
-  const moonSpeed = getMoonSpeedInOneHour(nextSignDate);
+  const moonSpeed = getMoonSpeed24h(nextSignDate); // getMoonSpeedInOneHour(nextSignDate);
   let previousRasiIndex = currentRasiIndex - 1;
   if (previousRasiIndex < 0) previousRasiIndex += 12;
   let nextRasiIndex = currentRasiIndex + 1;
@@ -71,46 +72,45 @@ function correction(nextSignDate, currentRasiIndex, isNextSignSearch) {
   if (isNextSignSearch) {
     let rasiEndDegree = 30 * (currentRasiIndex + 1);
     let difference = rasiEndDegree - Moon.degreeAbsolute;
-    if(rasiEndDegree === 360 && Moon.degreeAbsolute < 30){
-      difference-=360;
+    if (rasiEndDegree === 360 && Moon.degreeAbsolute < 30) {
+      difference -= 360;
     }
     var timeToAdd = difference / moonSpeed;
-    console.log(
-      "Degree diff",
-      difference,
-      rasiEndDegree,
-      Moon.degreeAbsolute
-    );
+    //console.log("Degree diff", difference, rasiEndDegree, Moon.degreeAbsolute);
     foundDate = new Date(nextSignDate.getTime() + timeToAdd);
-    
   } else {
-    debugger;
     if (Moon.index === currentRasiIndex) {
-      console.log(result, currentRasiIndex, "correction higher");
       var timeToReduce = Moon.degree / moonSpeed;
       foundDate = new Date(nextSignDate.getTime() - timeToReduce);
     } else if (Moon.index === previousRasiIndex) {
-      console.log("less than correct time correction");
       var timeToReduce = (30 - Moon.degree) / moonSpeed;
       foundDate = new Date(nextSignDate.getTime() - timeToReduce);
     }
   }
-  console.log(foundDate, 'for ', nextSignDate, currentRasiIndex, rasiNames[currentRasiIndex]);
-  console.log(panchang.calculate(foundDate));
-  return { foundDate, result };
+
+  const newResult = panchang.calculate(foundDate);
+  return { foundDate, result: newResult };
 }
 
 const findTransitDate = (utcDate, rasi, pathToNextSign, isNextSignSearch) => {
-  const moonSpeed = getMoonSpeed24h(utcDate);
+  // console.log("---------------------------------------------------");
+
+  const moonSpeed = getMoonSpeedInOneHour(utcDate);
   const ms = pathToNextSign / moonSpeed;
   const nextSignDate = new Date(utcDate.getTime() + ms);
-  let { foundDate, result } = correction(nextSignDate, rasi, isNextSignSearch);
 
+  // console.log('THE DATE BEFORE:', nextSignDate, ' ('+panchang.calculate(nextSignDate).Raasi.degreeAbsolute+')');
+  let { foundDate, result } = correction(nextSignDate, rasi, isNextSignSearch);
+  let bestResult = correction(foundDate, rasi, isNextSignSearch);
+
+  // console.log('THE DATE AFTER:', foundDate, '('+result.Raasi.degreeAbsolute+')');
+  // console.log('THE DATE AFTER BEST:', bestResult.foundDate, '('+bestResult.result.Raasi.degreeAbsolute+')');
+  // console.log('=====================');
   return {
-    date: foundDate,
-    rasi: result.Raasi.index,
+    date: bestResult.foundDate,
+    rasi: bestResult.result.Raasi.index,
     speed: moonSpeed,
-    info: result
+    info: bestResult.result
   };
 };
 
@@ -124,25 +124,29 @@ export const calculatePanchanga = date => {
 };
 
 export const findMoonTransits = (firstDate, lastDate) => {
+  
   const transits = [];
   const firstDateInfo = panchang.calculate(firstDate);
   const firstRecord = calculateNextSignStart(firstDate, firstDateInfo);
-  // transits.push({
-  //   name: rasiNames[firstRecord.rasi],
-  //   dateFrom: firstRecord.date
-  // });
+  transits.push({
+    name: rasiNames[firstRecord.rasi],
+    dateFrom: firstRecord.date
+  });
   debugger;
 
   let currentDate = firstRecord.date;
   let currentRasi = firstRecord.rasi;
   while (currentDate < lastDate) {
-    console.log('CurrentRasi index:', currentRasi);
     let result = findTransitDate(currentDate, currentRasi, 30, true);
-    
+
     currentDate = result.date;
     currentRasi++;
     if (currentRasi > 11) currentRasi -= 12;
-    transits.push({ name: rasiNames[currentRasi], dateFrom: result.date });
+    transits.push({
+      name: rasiNames[currentRasi],
+      dateFrom: result.date,
+      lon: lon2dms(result.info.Raasi.degreeAbsolute)
+    });
   }
 
   return transits;
