@@ -4,6 +4,7 @@ import { Route, Link, Switch } from "react-router-dom";
 import "./Layout.css";
 import UserForm from "../UserForm/UserForm";
 import TransitInfo from "../TransitInfo/TransitInfo";
+import HouseInfo from '../HouseInfo/HouseInfo';
 
 class Layout extends Component {
   render() {
@@ -30,6 +31,7 @@ class Layout extends Component {
           <Switch>
             <Route exact path="/" component={UserForm} />
             <Route path="/transit" component={TransitInfo} />
+            <Route path="/houseinfo/:id" component={HouseInfo} />
           </Switch>
         </main>
       </div>

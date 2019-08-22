@@ -34,33 +34,7 @@ class TransitInfo extends Component {
 
   calculate = (dateFrom, dateTo) => {
     return findMoonTransits(dateFrom, dateTo);
-    return [
-      {
-        name: "Овен",
-        dateFrom: new Date(),
-        dateTo: new Date()
-      },
-      {
-        name: "Телец",
-        dateFrom: new Date(),
-        dateTo: new Date()
-      },
-      {
-        name: "Близнецы",
-        dateFrom: new Date(),
-        dateTo: new Date()
-      },
-      {
-        name: "Рак",
-        dateFrom: new Date(),
-        dateTo: new Date()
-      },
-      {
-        name: "Лев",
-        dateFrom: new Date(),
-        dateTo: new Date()
-      }
-    ];
+    
   };
 
   calculateOnClick=()=> {
@@ -111,6 +85,7 @@ class TransitInfo extends Component {
       <th scope="col">Зодиак</th>
       <th scope="col">Начало</th>
       <th scope="col">Долгота</th>
+      <th scope="col">Лунный Дом</th>
      
    </tr>
   </thead>
