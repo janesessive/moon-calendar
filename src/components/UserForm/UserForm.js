@@ -3,7 +3,7 @@ import DatePicker from "react-datepicker";
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
-import { dataResult } from "../../lib/dataResult";
+import { houseData } from "../../lib/houseData";
 import moment from "moment";
 import { applyTimeZone, calculatePanchanga } from "../../services/astro";
 const key = "panchanga-data";
@@ -90,7 +90,7 @@ class UserForm extends Component {
     houseNumber++;
     this.setState({ houseNumber });
 
-    const description = dataResult.find(d => d.id === houseNumber);
+    const description = houseData.find(d => d.id === houseNumber);
     this.setState({ description });
   };
 

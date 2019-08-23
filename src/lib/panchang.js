@@ -1146,6 +1146,7 @@ var panchang = {
     result.Raasi.index = z;
     result.Raasi.nextSign = (z+1)*30;
     result.Nakshatra.name = naks[n_naksh];
+    result.Nakshatra.index = n_naksh;
     result.Nakshatra.start = s_naksh.start;
     result.Nakshatra.end = s_naksh.end;
  result.Karna.name = kar[n_karana];

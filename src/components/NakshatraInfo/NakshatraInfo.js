@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { houseData } from "../../lib/houseData";
+import { nakshatraData } from "../../lib/nakshatraData";
 
-class HouseInfo extends Component {
+class NakshatraInfo extends Component {
    
 render(){
     const id = this.props.match.params.id;
@@ -9,10 +9,10 @@ render(){
         return null;
     }
     const index= id-1;
-    if (index < 0 || index > 11) {
+    if (index < 0 || index > 26) {
         return null;
     }
-    const info = houseData[index];
+    const info = nakshatraData[index];
     return (
         <div><h2>{info.title}</h2>
         <p>{info.description}</p>
@@ -22,4 +22,4 @@ render(){
 }
 }
 
-export default HouseInfo;
+export default NakshatraInfo;

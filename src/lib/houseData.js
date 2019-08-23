@@ -1,4 +1,4 @@
-export const dataResult = [
+export const houseData = [
     {
         id: 1,
         title: "Тану бхава (первый дом - «дом тела»)",

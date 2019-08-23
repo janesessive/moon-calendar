@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import translate from "../../lib/Translator";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
 import './PanchangaInfo.css';
