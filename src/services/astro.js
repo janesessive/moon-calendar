@@ -123,6 +123,14 @@ export const calculatePanchanga = date => {
   return currentInfo;
 };
 
+export const findMoonTransitsAsync = async (firstDate, lastDate) =>{
+  return new Promise((resolve, reject)=>{
+    const result = findMoonTransits(firstDate, lastDate);    
+    console.log('resolved promise', result);
+    resolve(result);    
+  });
+};
+
 export const findMoonTransits = (firstDate, lastDate) => {
   
   const transits = [];
@@ -132,7 +140,7 @@ export const findMoonTransits = (firstDate, lastDate) => {
     name: rasiNames[firstRecord.rasi],
     dateFrom: firstRecord.date
   });
-  debugger;
+  
 
   let currentDate = firstRecord.date;
   let currentRasi = firstRecord.rasi;
