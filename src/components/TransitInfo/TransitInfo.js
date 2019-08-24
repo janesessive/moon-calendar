@@ -1,12 +1,21 @@
 import React, { Component } from "react";
+import { RingLoader } from "react-spinners";
+
 import DatePicker from "react-datepicker";
+import { css } from "@emotion/core";
+
 // import panchang from "../../lib/panchang";
 // import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
-import { findMoonTransits } from "../../services/astro";
+import { findMoonTransits, findMoonTransitsAsync } from "../../services/astro";
 // import moment from "moment";
 // const key = "panchanga-data";
+// Can be a string as well. Need to ensure each key-value pair ends with ;
+const override = css`
+  display: block;
+  margin: 0 auto;
+`;
 
 class TransitInfo extends Component {
   constructor(props) {
@@ -14,7 +23,8 @@ class TransitInfo extends Component {
     this.state = {
       dateFrom: new Date(),
       dateTo: new Date(),
-      transits: []
+      transits: [],
+      loading: false
     };
     this.handleChangeDateFrom = this.handleChangeDateFrom.bind(this);
     this.handleChangeDateTo = this.handleChangeDateTo.bind(this);
@@ -32,15 +42,18 @@ class TransitInfo extends Component {
     });
   }
 
-  calculate = (dateFrom, dateTo) => {
-    return findMoonTransits(dateFrom, dateTo);
-    
+  calculateOnClick = () => {
+    this.setState({ loading: true, transits: [] }, async () => {
+      setTimeout(async () => {
+        const transits = await findMoonTransitsAsync(
+          this.state.dateFrom,
+          this.state.dateTo
+        );
+        this.setState({ loading: false });
+        this.setState({ transits });
+      }, 10);
+    });
   };
-
-  calculateOnClick=()=> {
-    const transits = this.calculate(this.state.dateFrom, this.state.dateTo);
-    this.setState({ transits });
-  }
 
   render() {
     return (
@@ -55,6 +68,7 @@ class TransitInfo extends Component {
                 className="form-control mb-2"
                 selected={this.state.dateFrom}
                 onChange={this.handleChangeDateFrom}
+                disabled={this.state.loading}
               />
             </div>
             <div className="col-auto">
@@ -65,6 +79,7 @@ class TransitInfo extends Component {
                 className="form-control mb-2"
                 selected={this.state.dateTo}
                 onChange={this.handleChangeDateTo}
+                disabled={this.state.loading}
               />
             </div>
             <div className="col-auto">
@@ -72,37 +87,55 @@ class TransitInfo extends Component {
                 type="button"
                 className="btn btn-primary mb-2"
                 onClick={this.calculateOnClick}
+                disabled={this.state.loading}
               >
                 Calculate
               </button>
             </div>
           </div>
         </form>
-        {this.state.transits.length===0? null :
-        <table className="table table-striped">
-        <thead>
-    <tr>
-      <th scope="col">Зодиак</th>
-      <th scope="col">Начало</th>
-      <th scope="col">Долгота</th>
-      <th scope="col">Лунный Дом</th>
-     
-   </tr>
-  </thead>
-          <tbody>
-        {this.state.transits.map(transit => {
-        return (<tr key={transit.date}>
-         <td>{transit.name}</td>
-         <td>{formatDateToMinutes(transit.dateFrom)}</td>
-         <td>{transit.lon}</td>
-         </tr>)
-         
+        
+       {this.state.loading? <div
+          style={{
+            flex: 1,
+            marginTop: 240,
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >          
+          <RingLoader
+            sizeUnit={"px"}
+            size={50}
+            color={"#123abc"}
+            css={override}
+            loading={true}
+          />          
+        </div>:null}
+        {this.state.transits.length === 0 || this.state.loading ? null : (
+          <table className="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Зодиак</th>
+                <th scope="col">Начало</th>
+                <th scope="col">Долгота</th>
+                <th scope="col">Лунный Дом</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.transits.map(transit => {
+                return (
+                  <tr key={transit.date}>
+                    <td>{transit.name}</td>
+                    <td>{formatDateToMinutes(transit.dateFrom)}</td>
+                    <td>{transit.lon}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
 
-        })}
-        </tbody>
-        </table>}
-
-      {/* <pre>{JSON.stringify(this.state.transits, null, 2)}</pre> */}
+        {/* <pre>{JSON.stringify(this.state.transits, null, 2)}</pre> */}
       </div>
     );
   }

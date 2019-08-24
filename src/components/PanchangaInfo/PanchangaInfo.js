@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import translate from "../../lib/Translator";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
+import { ClipLoader } from 'react-spinners';
+import { css } from '@emotion/core';
+
 import './PanchangaInfo.css';
 
 const PanchangaInfo = props => {
