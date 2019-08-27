@@ -6,6 +6,7 @@ import UserForm from "../UserForm/UserForm";
 import TransitInfo from "../TransitInfo/TransitInfo";
 import HouseInfo from '../HouseInfo/HouseInfo';
 import NakshatraInfo from '../NakshatraInfo/NakshatraInfo';
+import TarabalaInfo from '../TarabalaInfo/TarabalaInfo';
 
 class Layout extends Component {
   render() {
@@ -34,6 +35,7 @@ class Layout extends Component {
             <Route path="/transit" component={TransitInfo} />
             <Route path="/houseinfo/:id" component={HouseInfo} />
             <Route path="/nakshatrainfo/:id" component={NakshatraInfo} />
+            <Route path="/tarabalainfo/:id" component={TarabalaInfo} />
           </Switch>
         </main>
       </div>

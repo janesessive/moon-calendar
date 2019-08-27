@@ -72,7 +72,7 @@ const PanchangaInfo = props => {
             id="moon"
             value={translate(props.info.Raasi.name)}
           />
-          {chandrabala ? <span>{chandrabala}</span> : null}
+          {chandrabala ? <Link to={`/houseinfo/${chandrabala}`}>{chandrabala}</Link> : null}
           {/* <input
             type="text"
             readonly
