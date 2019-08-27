@@ -94,6 +94,7 @@ const PanchangaInfo = props => {
             id="day"
             value={props.info.Nakshatra.name}
           />
+          <Link to={`/nakshatrainfo/${props.info.Nakshatra.index+1}`}>{props.info.Nakshatra.name}</Link>
           <input
             type="text"
             readonly
