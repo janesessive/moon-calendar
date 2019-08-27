@@ -1,7 +1,6 @@
 import panchang, { lon2dms } from "../lib/panchang";
 import { rasiNames } from "../lib/astroNames";
 
-
 export const applyTimeZone = (date, timeZoneHours, timeZoneOption) => {
   timeZoneHours = parseInt(timeZoneHours);
 
@@ -59,7 +58,6 @@ const getMoonSpeed24h = firstDate => {
 };
 
 function correction(nextSignDate, currentRasiIndex, isNextSignSearch) {
-  
   const result = panchang.calculate(nextSignDate);
   const Moon = result.Raasi;
   const moonSpeed = getMoonSpeed24h(nextSignDate); // getMoonSpeedInOneHour(nextSignDate);
@@ -123,16 +121,15 @@ export const calculatePanchanga = date => {
   return currentInfo;
 };
 
-export const findMoonTransitsAsync = async (firstDate, lastDate) =>{
-  return new Promise((resolve, reject)=>{
-    const result = findMoonTransits(firstDate, lastDate);    
-    console.log('resolved promise', result);
-    resolve(result);    
+export const findMoonTransitsAsync = async (firstDate, lastDate) => {
+  return new Promise((resolve, reject) => {
+    const result = findMoonTransits(firstDate, lastDate);
+    console.log("resolved promise", result);
+    resolve(result);
   });
 };
 
 export const findMoonTransits = (firstDate, lastDate) => {
-  
   const transits = [];
   const firstDateInfo = panchang.calculate(firstDate);
   const firstRecord = calculateNextSignStart(firstDate, firstDateInfo);
@@ -140,7 +137,6 @@ export const findMoonTransits = (firstDate, lastDate) => {
     name: rasiNames[firstRecord.rasi],
     dateFrom: firstRecord.date
   });
-  
 
   let currentDate = firstRecord.date;
   let currentRasi = firstRecord.rasi;
@@ -158,4 +154,16 @@ export const findMoonTransits = (firstDate, lastDate) => {
   }
 
   return transits;
+};
+
+export const calculateTarabala = function(birthNakshatra, currentNakshatra) {
+  let tarabala = 0;
+  let dist = currentNakshatra - birthNakshatra;
+  if (dist < 0) {
+    dist = dist + 27;
+  }
+  let x = dist % 9;
+  tarabala = x + 1;
+
+  return tarabala;
 };

@@ -1,15 +1,31 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import translate from "../../lib/Translator";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
-import { ClipLoader } from 'react-spinners';
-import { css } from '@emotion/core';
+import { ClipLoader } from "react-spinners";
+import { css } from "@emotion/core";
 
-import './PanchangaInfo.css';
+import "./PanchangaInfo.css";
+import { calculateTarabala } from "../../services/astro";
 
 const PanchangaInfo = props => {
   if (!props.info) {
     return null;
+  }
+  let chandrabala = null;
+  let tarabala = null;
+  if (props.birthInfo) {
+    let houseNumber = props.info.Raasi.index - props.birthInfo.Raasi.index;
+    if (houseNumber < 0) {
+      houseNumber = houseNumber + 12;
+    }
+
+    chandrabala = houseNumber + 1;
+
+    tarabala = calculateTarabala(
+      props.birthInfo.Nakshatra.index + 1,
+      props.info.Nakshatra.index + 1
+    );
   }
 
   return (
@@ -20,7 +36,7 @@ const PanchangaInfo = props => {
         </label>
         <div class="col-sm-9">
           <input
-          style={{fontWeight: "bold", color: "darkblue"}}
+            style={{ fontWeight: "bold", color: "darkblue" }}
             type="text"
             readonly
             className="form-control-plaintext"
@@ -29,8 +45,8 @@ const PanchangaInfo = props => {
           />
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="day" className="col-sm-3 col-form-label">
+      <div className="form-group row">
+        <label for="day" className="col-sm-3 col-form-label">
           День недели
         </label>
         <div class="col-sm-9">
@@ -43,19 +59,20 @@ const PanchangaInfo = props => {
           />
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="moon" className="col-sm-3 col-form-label">
-      Луна
+      <div className="form-group row">
+        <label for="moon" className="col-sm-3 col-form-label">
+          Луна
         </label>
         <div class="col-sm-9">
           <input
-          style={{fontWeight: "bold", color: "darkblue"}}
+            style={{ fontWeight: "bold", color: "darkblue" }}
             type="text"
             readonly
             className="form-control-plaintext"
             id="moon"
             value={translate(props.info.Raasi.name)}
           />
+          {chandrabala ? <span>{chandrabala}</span> : null}
           {/* <input
             type="text"
             readonly
@@ -63,41 +80,39 @@ const PanchangaInfo = props => {
             id="moon-degree"
             value={props.info.Raasi.degreeAbsolute}
           /> */}
-            {props.info.Raasi.firstSignDate?
-          <input
-            type="text"
-            readonly
-            className="form-control-plaintext"
-            id="moon-next-sign"
-            value={formatDateToMinutes(props.info.Raasi.firstSignDate)}
-            
-          />:null}
-          {props.info.Raasi.nextSignDate?
-          <input
-            type="text"
-            readonly
-            className="form-control-plaintext"
-            id="moon-next-sign"
-            value={formatDateToMinutes(props.info.Raasi.nextSignDate)}
-            
-          />:null}
+          {props.info.Raasi.firstSignDate ? (
+            <input
+              type="text"
+              readonly
+              className="form-control-plaintext"
+              id="moon-next-sign"
+              value={formatDateToMinutes(props.info.Raasi.firstSignDate)}
+            />
+          ) : null}
+          {props.info.Raasi.nextSignDate ? (
+            <input
+              type="text"
+              readonly
+              className="form-control-plaintext"
+              id="moon-next-sign"
+              value={formatDateToMinutes(props.info.Raasi.nextSignDate)}
+            />
+          ) : null}
           {/* <pre>{JSON.stringify(props.info.Raasi, null,2)}</pre> */}
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="nakshatra" className="col-sm-3 col-form-label">
-      Naksatra
+      <div className="form-group row">
+        <label for="nakshatra" className="col-sm-3 col-form-label">
+          Naksatra
         </label>
         <div class="col-sm-9">
-          <input
-          style={{fontWeight: "bold", color: "darkblue"}}
-            type="text"
-            readonly
-            className="form-control-plaintext"
-            id="day"
-            value={props.info.Nakshatra.name}
-          />
-          <Link to={`/nakshatrainfo/${props.info.Nakshatra.index+1}`}>{props.info.Nakshatra.name}</Link>
+          <Link to={`/nakshatrainfo/${props.info.Nakshatra.index + 1}`}>
+            {props.info.Nakshatra.name}
+          </Link>
+          {tarabala?
+          <Link  to={`/tarabalainfo/${tarabala}`}>
+            {tarabala}
+          </Link> : null}
           <input
             type="text"
             readonly
@@ -112,12 +127,11 @@ const PanchangaInfo = props => {
             id="nakshatra-end"
             value={formatDateToMinutes(props.info.Nakshatra.end)}
           />
-          
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="tithi" className="col-sm-3 col-form-label">
-      Tithi
+      <div className="form-group row">
+        <label for="tithi" className="col-sm-3 col-form-label">
+          Tithi
         </label>
         <div class="col-sm-9">
           <input
@@ -143,9 +157,9 @@ const PanchangaInfo = props => {
           />
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="karna" className="col-sm-3 col-form-label">
-      Karna
+      <div className="form-group row">
+        <label for="karna" className="col-sm-3 col-form-label">
+          Karna
         </label>
         <div class="col-sm-9">
           <input
@@ -171,9 +185,9 @@ const PanchangaInfo = props => {
           />
         </div>
       </div>
-      <div className="form-group row" >
-      <label for="yoga" className="col-sm-3 col-form-label">
-      Yoga
+      <div className="form-group row">
+        <label for="yoga" className="col-sm-3 col-form-label">
+          Yoga
         </label>
         <div class="col-sm-9">
           <input

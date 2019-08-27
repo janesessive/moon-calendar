@@ -228,6 +228,7 @@ class UserForm extends Component {
           </div>
           <div className="col-sm-3">
             <PanchangaInfo
+              birthInfo={this.state.birthInfo}
               info={this.state.currentInfo}
               currentDate={this.state.currentDate}
             />
