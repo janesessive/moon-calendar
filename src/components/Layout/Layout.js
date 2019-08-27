@@ -14,7 +14,7 @@ class Layout extends Component {
         <header>
           <nav className="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
             <ul className="navbar-nav">
-            <span class="navbar-brand mb-0 h1">Panchanga</span>
+            <span className="navbar-brand mb-0 h1">Panchanga</span>
               <li className="nav-item active">
                 <Link className="nav-link" to="/">
                   Info
