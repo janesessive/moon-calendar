@@ -111,7 +111,7 @@ const PanchangaInfo = props => {
           </Link>
           {tarabala?
           <Link  to={`/tarabalainfo/${tarabala}`}>
-            {tarabala}
+            {" (" + tarabala + ")"}
           </Link> : null}
           <input
             type="text"
