@@ -7,6 +7,7 @@ import TransitInfo from "../TransitInfo/TransitInfo";
 import HouseInfo from '../HouseInfo/HouseInfo';
 import NakshatraInfo from '../NakshatraInfo/NakshatraInfo';
 import TarabalaInfo from '../TarabalaInfo/TarabalaInfo';
+import DayInfo from '../DayInfo/DayInfo';
 
 class Layout extends Component {
   render() {
@@ -36,6 +37,7 @@ class Layout extends Component {
             <Route path="/houseinfo/:id" component={HouseInfo} />
             <Route path="/nakshatrainfo/:id" component={NakshatraInfo} />
             <Route path="/tarabalainfo/:id" component={TarabalaInfo} />
+            <Route path="/dayinfo/:id" component = {DayInfo} />
           </Switch>
         </main>
       </div>

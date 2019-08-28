@@ -1042,6 +1042,7 @@ var panchang = {
     // day:
     n_wday = weekDay(jdlt);
     this.Day.name = wd[n_wday];
+    this.Day.index=n_wday;
 
     // julian day at the begining of the day
     var jd0 = mdy2julian(mon, day, year);
@@ -1138,6 +1139,7 @@ var panchang = {
 
 
     result.Day.name = this.Day.name;
+    result.Day.index = this.Day.index;
 
     result.Ayanamsa = lon2dms(ayanamsa);
     result.Raasi.degreeAbsolute = fix360(Lmoon + ayanamsa);

@@ -50,13 +50,10 @@ const PanchangaInfo = props => {
           День недели
         </label>
         <div class="col-sm-9">
-          <input
-            type="text"
-            readonly
-            className="form-control-plaintext"
-            id="day"
-            value={props.info.Day.name}
-          />
+          
+          <Link to={`/dayinfo/${props.info.Day.index + 1}`}>
+            {props.info.Day.name}
+          </Link>
         </div>
       </div>
       <div className="form-group row">

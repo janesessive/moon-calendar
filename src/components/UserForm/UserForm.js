@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import DatePicker from "react-datepicker";
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
@@ -223,7 +224,7 @@ class UserForm extends Component {
           <div className="col-sm-3">
             <PanchangaInfo
               info={this.state.birthInfo}
-              currentDate={this.state.birthDate}
+              currentDate={this.props.birthDate}
             />
           </div>
           <div className="col-sm-3">
@@ -261,4 +262,10 @@ class UserForm extends Component {
   }
 }
 
-export default UserForm;
+const mapStateToProps = state => {
+  return {
+    birthDate: state.birthDate
+  }
+}
+
+export default connect(mapStateToProps)(UserForm);
