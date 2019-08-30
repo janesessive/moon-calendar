@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 // import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import { RingLoader } from "react-spinners";
-import {getChandraBala, determineGoodBadDay} from '../../services/astro';
+import { getChandraBala, determineGoodBadDay } from "../../services/astro";
 
 import DatePicker from "react-datepicker";
 import { css } from "@emotion/core";
-import './TransitInfo.css';
+import "./TransitInfo.css";
 
 // import panchang from "../../lib/panchang";
 // import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
@@ -33,6 +33,10 @@ class TransitInfo extends Component {
     };
     this.handleChangeDateFrom = this.handleChangeDateFrom.bind(this);
     this.handleChangeDateTo = this.handleChangeDateTo.bind(this);
+  }
+
+  componentDidMount() {
+    this.calculateOnClick();
   }
 
   handleChangeDateFrom(date) {
@@ -62,8 +66,12 @@ class TransitInfo extends Component {
 
   render() {
     if (!this.props.birthData) {
-     return <div><h2>Пожалуйста, введите дату рождения на первой странице</h2></div>   
-     } 
+      return (
+        <div>
+          <h2>Пожалуйста, введите дату рождения на первой странице</h2>
+        </div>
+      );
+    }
     return (
       <div className="container">
         <form>
@@ -102,23 +110,25 @@ class TransitInfo extends Component {
             </div>
           </div>
         </form>
-        
-       {this.state.loading? <div
-          style={{
-            flex: 1,
-            marginTop: 240,
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        >          
-          <RingLoader
-            sizeUnit={"px"}
-            size={50}
-            color={"#123abc"}
-            css={override}
-            loading={true}
-          />          
-        </div>:null}
+
+        {this.state.loading ? (
+          <div
+            style={{
+              flex: 1,
+              marginTop: 240,
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <RingLoader
+              sizeUnit={"px"}
+              size={50}
+              color={"#123abc"}
+              css={override}
+              loading={true}
+            />
+          </div>
+        ) : null}
         {this.state.transits.length === 0 || this.state.loading ? null : (
           <table className="table table-striped">
             <thead>
@@ -131,16 +141,26 @@ class TransitInfo extends Component {
             </thead>
             <tbody>
               {this.state.transits.map(transit => {
+                const chandraBala = getChandraBala(
+                  this.props.birthData.moon,
+                  transit.index
+                );
                 return (
                   <tr key={transit.date}>
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
                     <td>{transit.lon}</td>
                     {/* <td>{transit.index}</td> */}
-                    <td>{typeof transit.index === 'number'? 
-                    <Link className={determineGoodBadDay(getChandraBala(this.props.birthData.moon, transit.index))} to={`/houseinfo/${getChandraBala(this.props.birthData.moon, transit.index)}`}>
-                    {getChandraBala(this.props.birthData.moon, transit.index)}
-                    </Link> : null}</td>
+                    <td>
+                      {typeof transit.index === "number" ? (
+                        <Link
+                          className={determineGoodBadDay(chandraBala)}
+                          to={`/houseinfo/${chandraBala}`}
+                        >
+                          {chandraBala}
+                        </Link>
+                      ) : null}
+                    </td>
                   </tr>
                 );
               })}
@@ -154,4 +174,7 @@ class TransitInfo extends Component {
   }
 }
 
-export default connect(state=>state, null)(TransitInfo);
+export default connect(
+  state => state,
+  null
+)(TransitInfo);
