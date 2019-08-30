@@ -1,9 +1,20 @@
+import { SET_BIRTH_DATA } from './actions';
+
+
 const initialState = {
-    birthDate: new Date()
+    birthData: {}
 }
 
 const reducer = (state=initialState, action) => {
-    return state;
+    switch(action.type) {
+        case SET_BIRTH_DATA:
+            return {...state,
+                birthData: action.birthData
+            }
+            default:
+                return state;
+    }
+    
 };
 
 export default reducer;

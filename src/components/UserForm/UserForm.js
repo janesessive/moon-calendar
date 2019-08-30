@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as actionCreators from '../../store/actions';
 import DatePicker from "react-datepicker";
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
@@ -80,8 +82,12 @@ class UserForm extends Component {
     const birthInfo = calculatePanchanga(utcDate);
     const currentInfo = calculatePanchanga(this.state.currentDate);
     //TODO: call calculate here
+   
     this.setState({ birthInfo, currentInfo });
-    
+    var birthData = {moon: birthInfo.Raasi.index, nakshatra: birthInfo.Nakshatra.index};
+    // store.dispatch(setBirthData(birthData));
+    debugger;
+    this.props.setBirthData(birthData);
 
     let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
     if (houseNumber < 0) {
@@ -224,7 +230,7 @@ class UserForm extends Component {
           <div className="col-sm-3">
             <PanchangaInfo
               info={this.state.birthInfo}
-              currentDate={this.props.birthDate}
+              currentDate={this.state.birthDate}
             />
           </div>
           <div className="col-sm-3">
@@ -262,10 +268,6 @@ class UserForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    birthDate: state.birthDate
-  }
-}
 
-export default connect(mapStateToProps)(UserForm);
+export default connect(state => state, dispatch => bindActionCreators(actionCreators, dispatch))(UserForm);
+

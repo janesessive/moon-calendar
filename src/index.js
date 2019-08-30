@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, compose } from 'redux';
 import {Provider} from 'react-redux';
 import './index.css';
 import App from './App';
@@ -8,8 +8,14 @@ import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import reducer from './store/reducer';
 // import axios from 'axios';
+// In development, use the browser's Redux dev tools extension if installed
+const enhancers = [];
+const isDevelopment = process.env.NODE_ENV === 'development';
+if (isDevelopment && typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__) {
+  enhancers.push(window.__REDUX_DEVTOOLS_EXTENSION__());
+}
 
-const store = createStore(reducer);
+const store = createStore(reducer, {}, compose(...enhancers));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 

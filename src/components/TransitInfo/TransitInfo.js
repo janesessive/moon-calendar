@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { RingLoader } from "react-spinners";
 
 import DatePicker from "react-datepicker";
