@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RingLoader } from "react-spinners";
@@ -25,7 +26,7 @@ class TransitInfo extends Component {
     super(props);
     this.state = {
       dateFrom: new Date(),
-      dateTo: new Date(),
+      dateTo: new Date().setDate(new Date().getDate() + 30),
       transits: [],
       loading: false
     };
@@ -134,7 +135,10 @@ class TransitInfo extends Component {
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
                     <td>{transit.lon}</td>
-                    <td>{transit.index? getChandraBala(this.props.birthData.moon, transit.index): null}</td>
+                    <td>{transit.index? 
+                    <Link to={`/houseinfo/${getChandraBala(this.props.birthData.moon, transit.index)}`}>
+                    {getChandraBala(this.props.birthData.moon, transit.index)}
+                    </Link> : null}</td>
                   </tr>
                 );
               })}
@@ -142,7 +146,7 @@ class TransitInfo extends Component {
           </table>
         )}
 
-        <pre>{JSON.stringify(this.props, null, 2)}</pre>
+        {/* <pre>{JSON.stringify(this.props, null, 2)}</pre> */}
       </div>
     );
   }
