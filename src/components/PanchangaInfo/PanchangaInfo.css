@@ -7,3 +7,9 @@ input #moon{
     color: darkblue;
 
 }
+
+.customLink {
+    text-decoration: underline;
+    color: blue !important;
+    
+}

@@ -26,10 +26,10 @@ const PanchangaInfo = props => {
   return (
     <div className="container">
       <div className="form-group row">
-        <label htmlFor="date" className="col-sm-3 col-form-label">
-          Date
+        <label htmlFor="date" className="col-sm-4 col-form-label">
+          Дата
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           <input
             style={{ fontWeight: "bold", color: "darkblue" }}
             type="text"
@@ -41,21 +41,21 @@ const PanchangaInfo = props => {
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="day" className="col-sm-3 col-form-label">
+        <label htmlFor="day" className="col-sm-4 col-form-label">
           День недели
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           
-          <Link to={`/dayinfo/${props.info.Day.index + 1}`}>
+          <Link className="form-control-plaintext customLink" to={`/dayinfo/${props.info.Day.index + 1}`}>
             {props.info.Day.name}
           </Link>
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="moon" className="col-sm-3 col-form-label">
+        <label htmlFor="moon" className="col-sm-4 col-form-label">
           Луна
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           <input
             style={{ fontWeight: "bold", color: "darkblue" }}
             type="text"
@@ -64,7 +64,7 @@ const PanchangaInfo = props => {
             id="moon"
             value={translate(props.info.Raasi.name)}
           />
-          {chandrabala ? <Link to={`/houseinfo/${chandrabala}`}>{chandrabala}</Link> : null}
+          {chandrabala ? <Link className="form-control-plaintext customLink" to={`/houseinfo/${chandrabala}`}>{chandrabala} дом</Link> : null}
           {/* <input
             type="text"
             readonly
@@ -94,17 +94,20 @@ const PanchangaInfo = props => {
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="nakshatra" className="col-sm-3 col-form-label">
-          Naksatra
+        <label htmlFor="nakshatra" className="col-sm-4 col-form-label">
+          Накшатра
         </label>
-        <div className="col-sm-9">
-          <Link to={`/nakshatrainfo/${props.info.Nakshatra.index + 1}`}>
+        <div className="col-sm-8">
+          <Link className="form-control-plaintext customLink" to={`/nakshatrainfo/${props.info.Nakshatra.index + 1}`}>
             {props.info.Nakshatra.name}
           </Link>
+    
+          <div>
           {tarabala?
-          <Link  to={`/tarabalainfo/${tarabala}`}>
-            {" (" + tarabala + ")"}
+          <Link  className="form-control-plaintext customLink" to={`/tarabalainfo/${tarabala}`}>
+            {" (тарабала: " + tarabala + ")"}
           </Link> : null}
+          </div>
           <input
             type="text"
             readOnly
@@ -122,10 +125,10 @@ const PanchangaInfo = props => {
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="tithi" className="col-sm-3 col-form-label">
-          Tithi
+        <label htmlFor="tithi" className="col-sm-4 col-form-label">
+          Титхи
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           <input
             type="tithi"
             readOnly
@@ -150,10 +153,10 @@ const PanchangaInfo = props => {
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="karna" className="col-sm-3 col-form-label">
-          Karna
+        <label htmlFor="karna" className="col-sm-4 col-form-label">
+          Карна
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           <input
             type="karna"
             readOnly
@@ -178,10 +181,10 @@ const PanchangaInfo = props => {
         </div>
       </div>
       <div className="form-group row">
-        <label htmlFor="yoga" className="col-sm-3 col-form-label">
-          Yoga
+        <label htmlFor="yoga" className="col-sm-4 col-form-label">
+          Йога
         </label>
-        <div className="col-sm-9">
+        <div className="col-sm-8">
           <input
             type="yoga"
             readOnly
