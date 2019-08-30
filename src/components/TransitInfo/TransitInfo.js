@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RingLoader } from "react-spinners";
 
@@ -137,10 +137,10 @@ class TransitInfo extends Component {
           </table>
         )}
 
-        {/* <pre>{JSON.stringify(this.state.transits, null, 2)}</pre> */}
+        <pre>{JSON.stringify(this.props, null, 2)}</pre>
       </div>
     );
   }
 }
 
-export default TransitInfo;
+export default connect(state=>state, null)(TransitInfo);

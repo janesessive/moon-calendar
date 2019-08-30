@@ -86,7 +86,7 @@ class UserForm extends Component {
     this.setState({ birthInfo, currentInfo });
     var birthData = {moon: birthInfo.Raasi.index, nakshatra: birthInfo.Nakshatra.index};
     // store.dispatch(setBirthData(birthData));
-    debugger;
+   
     this.props.setBirthData(birthData);
 
     let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
@@ -104,7 +104,7 @@ class UserForm extends Component {
   render() {
     return (
       <div className="containter">
-        <div class="row">
+        <div className="row">
           <div className="col-sm-3">
             <form className="container border border-secondary rounded">
               <div className="form-group">
@@ -138,7 +138,7 @@ class UserForm extends Component {
                 </div>
               </div>
               <div className="form-row">
-                <div class="col-auto">
+                <div className="col-auto">
                   <label htmlFor="timeZone">Часовой пояс: </label>
                   <input
                     className="form-control"
@@ -173,7 +173,7 @@ class UserForm extends Component {
                   </label>
                 </div> */}
 
-                <div class="col-auto">
+                <div className="col-auto">
                   <div className="form-check form-check-inline">
                     <input
                       className="form-check-input"
@@ -184,7 +184,7 @@ class UserForm extends Component {
                       checked={this.state.selectedOption === "east"}
                       onChange={this.handleOptionChange}
                     />
-                    <label className="form-check-label" for="east">
+                    <label className="form-check-label" htmlFor="east">
                       east
                     </label>
                   </div>
@@ -198,7 +198,7 @@ class UserForm extends Component {
                       checked={this.state.selectedOption === "west"}
                       onChange={this.handleOptionChange}
                     />
-                    <label className="form-check-label" for="west">
+                    <label className="form-check-label" htmlFor="west">
                       west
                     </label>
                   </div>
