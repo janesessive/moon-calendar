@@ -181,14 +181,23 @@ export const getChandraBala=(birthRasi, currentRasi)=> {
 
 export const determineGoodBadDay = (number) => {
   switch (number){
-    case 8,12:
-      return 'red'
-      case 1,3,6,9,10,11:
-      return 'green'
-      case 2,4,5:
-      return 'orange'
-      default:
-      return 'black'
+    case 8:
+      return 'worst'
+    case 12:
+      return 'worst'
+    case 1:
+    case 3:
+    case 6:
+    case 9:
+    case 10:
+    case 11:
+      return 'good'
+    case 2:
+    case 4:
+    case 5:
+      return 'bad'
+    default:
+      return 'normal'
   }
    
 }

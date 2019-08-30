@@ -1,13 +1,16 @@
-.red {
-    color: red
+.worst {
+    color: red;
+    font-weight: bold
 }
 
-.orange {
-    color: orange
+.bad {
+    color: orange;
+    font-weight: bold
 }
 
-.green {
-    color: green
+.good {
+    color: green;
+    font-weight: bold
 
 }
 

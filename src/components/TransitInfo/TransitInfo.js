@@ -136,7 +136,7 @@ class TransitInfo extends Component {
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
                     <td>{transit.lon}</td>
-                    <td>{transit.index}</td>
+                    {/* <td>{transit.index}</td> */}
                     <td>{typeof transit.index === 'number'? 
                     <Link className={determineGoodBadDay(getChandraBala(this.props.birthData.moon, transit.index))} to={`/houseinfo/${getChandraBala(this.props.birthData.moon, transit.index)}`}>
                     {getChandraBala(this.props.birthData.moon, transit.index)}
