@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RingLoader } from "react-spinners";
+import {getChandraBala} from '../../services/astro';
 
 import DatePicker from "react-datepicker";
 import { css } from "@emotion/core";
@@ -58,6 +59,9 @@ class TransitInfo extends Component {
   };
 
   render() {
+    if (!this.props.birthData) {
+     return <div><h2>Пожалуйста, введите дату рождения на первой странице</h2></div>   
+     } 
     return (
       <div className="container">
         <form>
@@ -130,6 +134,7 @@ class TransitInfo extends Component {
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
                     <td>{transit.lon}</td>
+                    <td>{transit.index? getChandraBala(this.props.birthData.moon, transit.index): null}</td>
                   </tr>
                 );
               })}

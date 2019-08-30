@@ -149,7 +149,8 @@ export const findMoonTransits = (firstDate, lastDate) => {
     transits.push({
       name: rasiNames[currentRasi],
       dateFrom: result.date,
-      lon: lon2dms(result.info.Raasi.degreeAbsolute)
+      lon: lon2dms(result.info.Raasi.degreeAbsolute),
+      index: currentRasi
     });
   }
 
@@ -167,3 +168,13 @@ export const calculateTarabala = function(birthNakshatra, currentNakshatra) {
 
   return tarabala;
 };
+
+export const getChandraBala=(birthRasi, currentRasi)=> {
+  let houseNumber = currentRasi - birthRasi;
+  if (houseNumber < 0) {
+    houseNumber = houseNumber + 12;
+  }
+
+  const chandrabala = houseNumber + 1;
+  return chandrabala;
+}

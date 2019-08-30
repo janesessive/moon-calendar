@@ -6,7 +6,7 @@ import { ClipLoader } from "react-spinners";
 import { css } from "@emotion/core";
 
 import "./PanchangaInfo.css";
-import { calculateTarabala } from "../../services/astro";
+import { calculateTarabala, getChandraBala } from "../../services/astro";
 
 const PanchangaInfo = props => {
   if (!props.info) {
@@ -15,13 +15,8 @@ const PanchangaInfo = props => {
   let chandrabala = null;
   let tarabala = null;
   if (props.birthInfo) {
-    let houseNumber = props.info.Raasi.index - props.birthInfo.Raasi.index;
-    if (houseNumber < 0) {
-      houseNumber = houseNumber + 12;
-    }
-
-    chandrabala = houseNumber + 1;
-
+    chandrabala = getChandraBala(props.info.Raasi.index, props.birthInfo.Raasi.index);
+    
     tarabala = calculateTarabala(
       props.birthInfo.Nakshatra.index + 1,
       props.info.Nakshatra.index + 1
