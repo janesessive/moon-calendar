@@ -178,3 +178,17 @@ export const getChandraBala=(birthRasi, currentRasi)=> {
   const chandrabala = houseNumber + 1;
   return chandrabala;
 }
+
+export const determineGoodBadDay = (number) => {
+  switch (number){
+    case 8,12:
+      return 'red'
+      case 1,3,6,9,10,11:
+      return 'green'
+      case 2,4,5:
+      return 'orange'
+      default:
+      return 'black'
+  }
+   
+}

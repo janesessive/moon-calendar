@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 // import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { RingLoader } from "react-spinners";
-import {getChandraBala} from '../../services/astro';
+import {getChandraBala, determineGoodBadDay} from '../../services/astro';
 
 import DatePicker from "react-datepicker";
 import { css } from "@emotion/core";
+import './TransitInfo.css';
 
 // import panchang from "../../lib/panchang";
 // import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
@@ -135,8 +136,9 @@ class TransitInfo extends Component {
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
                     <td>{transit.lon}</td>
-                    <td>{transit.index? 
-                    <Link to={`/houseinfo/${getChandraBala(this.props.birthData.moon, transit.index)}`}>
+                    <td>{transit.index}</td>
+                    <td>{typeof transit.index === 'number'? 
+                    <Link className={determineGoodBadDay(getChandraBala(this.props.birthData.moon, transit.index))} to={`/houseinfo/${getChandraBala(this.props.birthData.moon, transit.index)}`}>
                     {getChandraBala(this.props.birthData.moon, transit.index)}
                     </Link> : null}</td>
                   </tr>
