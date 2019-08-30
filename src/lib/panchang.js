@@ -68,7 +68,7 @@ var naks = [
   'Revathi'
 ];
 var tith = [
-  'Padyami',
+  'Padyami*',
   'Vidhiya',
   'Thadiya',
   'Chavithi',

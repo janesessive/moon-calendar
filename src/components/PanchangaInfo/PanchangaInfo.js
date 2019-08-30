@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import translate from "../../lib/Translator";
+import { translateSign, translateDay, translateNaks, translateTithi, translateKarana, translateYoga } from "../../lib/Translator";
 import { formatDate, formatDateToMinutes } from "../../lib/utils";
 import { ClipLoader } from "react-spinners";
 import { css } from "@emotion/core";
@@ -47,7 +47,7 @@ const PanchangaInfo = props => {
         <div className="col-sm-8">
           
           <Link className="form-control-plaintext customLink" to={`/dayinfo/${props.info.Day.index + 1}`}>
-            {props.info.Day.name}
+            {translateDay(props.info.Day.name)}
           </Link>
         </div>
       </div>
@@ -62,7 +62,7 @@ const PanchangaInfo = props => {
             readOnly
             className="form-control-plaintext"
             id="moon"
-            value={translate(props.info.Raasi.name)}
+            value={translateSign(props.info.Raasi.name)}
           />
           {chandrabala ? <Link className="form-control-plaintext customLink" to={`/houseinfo/${chandrabala}`}>{chandrabala} дом</Link> : null}
           {/* <input
@@ -99,7 +99,7 @@ const PanchangaInfo = props => {
         </label>
         <div className="col-sm-8">
           <Link className="form-control-plaintext customLink" to={`/nakshatrainfo/${props.info.Nakshatra.index + 1}`}>
-            {props.info.Nakshatra.name}
+            {translateNaks(props.info.Nakshatra.name)}
           </Link>
     
           <div>
@@ -134,7 +134,7 @@ const PanchangaInfo = props => {
             readOnly
             className="form-control-plaintext"
             id="tithi"
-            value={props.info.Tithi.name}
+            value={translateTithi(props.info.Tithi.name)}
           />
           <input
             type="text"
@@ -154,7 +154,7 @@ const PanchangaInfo = props => {
       </div>
       <div className="form-group row">
         <label htmlFor="karna" className="col-sm-4 col-form-label">
-          Карна
+          Карана
         </label>
         <div className="col-sm-8">
           <input
@@ -162,7 +162,7 @@ const PanchangaInfo = props => {
             readOnly
             className="form-control-plaintext"
             id="karna"
-            value={props.info.Karna.name}
+            value={translateKarana(props.info.Karna.name)}
           />
           <input
             type="text"
@@ -190,7 +190,7 @@ const PanchangaInfo = props => {
             readOnly
             className="form-control-plaintext"
             id="yoga"
-            value={props.info.Yoga.name}
+            value={translateYoga(props.info.Yoga.name)}
           />
           <input
             type="text"

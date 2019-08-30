@@ -19,12 +19,12 @@ class Layout extends Component {
             <span className="navbar-brand mb-0 h1">Panchanga</span>
               <li className="nav-item active">
                 <Link className="nav-link" to="/">
-                  Info
+                  Инфо
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/transit">
-                  Transit Information
+                  Транзиты
                 </Link>
               </li>
             </ul>
