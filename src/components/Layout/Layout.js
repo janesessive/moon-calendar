@@ -14,10 +14,10 @@ class Layout extends Component {
     return (
       <div className="Layout">
         <header>
-          <nav className="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+          <nav className="navbar navbar-collapse navbar-expand-sm bg-dark navbar-dark">
             <ul className="navbar-nav">
             <span className="navbar-brand mb-0 h1">Panchanga</span>
-              <li className="nav-item active">
+              <li className="nav-item">
                 <Link className="nav-link" to="/">
                   Инфо
                 </Link>

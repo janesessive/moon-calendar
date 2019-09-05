@@ -15,7 +15,7 @@ const PanchangaInfo = props => {
   let chandrabala = null;
   let tarabala = null;
   if (props.birthInfo) {
-    chandrabala = getChandraBala(props.info.Raasi.index, props.birthInfo.Raasi.index);
+    chandrabala = getChandraBala(props.birthInfo.Raasi.index, props.info.Raasi.index);
     
     tarabala = calculateTarabala(
       props.birthInfo.Nakshatra.index + 1,
