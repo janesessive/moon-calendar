@@ -15,10 +15,10 @@ class Layout extends Component {
   render() {
     return (
       <div className="Layout">
-        {/* <NavBar /> */}
+        <NavBar />
         
 
-        <nav className="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
+        {/* <nav className="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
             <ul className="navbar-nav">
               <span className="navbar-brand mb-0 h1">Panchanga</span>
               <li className="nav-item">
@@ -37,7 +37,7 @@ class Layout extends Component {
                 </Link>
               </li>
             </ul>
-          </nav>
+          </nav> */}
 
         <main className="content">
           <Switch>
