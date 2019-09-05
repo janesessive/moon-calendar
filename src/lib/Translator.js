@@ -80,7 +80,7 @@ export const translateNaks = (name) => {
         data['Trayodasi']='Шукла Трайодаши(13й↑)';
         data['Chaturdasi']='Шукла Чатурдаши(14й↑)';
         data['Punnami']='Пурнима(Полнолуние)';
-        data['Padyami']='Кришна Пратипад(1й↓)';
+        data['Padyami-']='Кришна Пратипад(1й↓)';
         data['Vidhiya']='Кришна Двитйа(2й↓)';
         data['Thadiya']='Кришна Тритйа(3й↓)';
         data['Chaviti']='Кришна Чатуртхи(4й↓)';

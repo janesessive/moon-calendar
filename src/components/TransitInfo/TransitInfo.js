@@ -105,7 +105,7 @@ class TransitInfo extends Component {
                 onClick={this.calculateOnClick}
                 disabled={this.state.loading}
               >
-                Calculate
+                Расчитать
               </button>
             </div>
           </div>
@@ -135,7 +135,7 @@ class TransitInfo extends Component {
               <tr>
                 <th scope="col">Зодиак</th>
                 <th scope="col">Начало</th>
-                <th scope="col">Долгота</th>
+                {/* <th scope="col">Долгота</th> */}
                 <th scope="col">Лунный Дом</th>
               </tr>
             </thead>
@@ -149,7 +149,7 @@ class TransitInfo extends Component {
                   <tr key={transit.date}>
                     <td>{transit.name}</td>
                     <td>{formatDateToMinutes(transit.dateFrom)}</td>
-                    <td>{transit.lon}</td>
+                    {/* <td>{transit.lon}</td> */}
                     {/* <td>{transit.index}</td> */}
                     <td>
                       {typeof transit.index === "number" ? (

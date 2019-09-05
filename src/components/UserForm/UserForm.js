@@ -110,6 +110,7 @@ class UserForm extends Component {
               <div className="form-group">
                 <label htmlFor="currentDate">День прогноза: </label>
                 <div>
+                  
                   <DatePicker
                     className="form-control"
                     selected={this.state.currentDate}
@@ -120,6 +121,7 @@ class UserForm extends Component {
                     dateFormat="MMMM d, yyyy h:mm aa"
                     timeCaption="time"
                   />
+                  
                 </div>
               </div>
               <div className="form-group">
@@ -185,7 +187,7 @@ class UserForm extends Component {
                       onChange={this.handleOptionChange}
                     />
                     <label className="form-check-label" htmlFor="east">
-                      east
+                      восток
                     </label>
                   </div>
                   <div className="form-check form-check-inline">
@@ -199,7 +201,7 @@ class UserForm extends Component {
                       onChange={this.handleOptionChange}
                     />
                     <label className="form-check-label" htmlFor="west">
-                      west
+                      запад
                     </label>
                   </div>
                 </div>
@@ -211,7 +213,7 @@ class UserForm extends Component {
                     className="btn btn-success"
                     onClick={this.saveData}
                   >
-                    Save data
+                    Сохранить
                   </button>
 
                   <button
@@ -220,7 +222,7 @@ class UserForm extends Component {
                     className="btn btn-primary"
                     onClick={this.calculateResult}
                   >
-                    Calculate
+                    Расчитать
                   </button>
                 </div>
               </div>

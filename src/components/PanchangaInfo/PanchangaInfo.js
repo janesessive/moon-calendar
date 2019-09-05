@@ -134,7 +134,8 @@ const PanchangaInfo = props => {
             readOnly
             className="form-control-plaintext"
             id="tithi"
-            value={translateTithi(props.info.Tithi.name)}
+            value={props.info.Tithi.name}
+            // value={translateTithi(props.info.Tithi.name)}
           />
           <input
             type="text"
