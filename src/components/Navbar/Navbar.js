@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -11,7 +11,8 @@ import {
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem } from 'reactstrap';
+  DropdownItem
+} from "reactstrap";
 
 export default class NavBar extends React.Component {
   constructor(props) {
@@ -30,21 +31,26 @@ export default class NavBar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="light" light expand="md">
+        <Navbar color="dark" dark expand="md">
           <NavbarBrand href="/">Panchanga</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <Link to="/">Инфо</Link>
+                <Link className="nav-link" to="/">
+                  Инфо
+                </Link>
               </NavItem>
               <NavItem>
-                <Link to="/current-info">Текущая информация</Link>
+                <Link to="/current-info" className="nav-link">
+                  Текущая информация
+                </Link>
               </NavItem>
               <NavItem>
-                <Link to="/transit">Транзиты</Link>
+                <Link className="nav-link" to="/transit">
+                  Транзиты
+                </Link>
               </NavItem>
-              
             </Nav>
           </Collapse>
         </Navbar>
