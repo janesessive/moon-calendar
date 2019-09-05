@@ -65,36 +65,37 @@ export const translateNaks = (name) => {
 
      export const translateTithi = (name) => {
         var data = [];
-        data['Padyami*']='Шукла Пратипад(1й↑)';
-        data['Vidhiya']='Шукла Двитйа(2й↑)';
-        data['Thadiya']='Шукла Тритйа(3й↑)';
-        data['Chavithi']='Шукла Чатуртхи(4й↑)';
-        data['Panchami']='Шукла Панчами(5й↑)';
-        data['Shasti']='Шукла Шаштхи(6й↑)';
-        data['Sapthami']='Шукла Саптами(7й↑)';
-        data['Ashtami']='Шукла Аштами(8й↑)';
-        data['Navami']='Шукла Навами(9й↑)';
-        data['Dasami']='Шукла Дашами(10й↑)';
-        data['Ekadasi']='Шукла Экадаши(11й↑)';
-        data['Dvadasi']='Шукла Двадаши(12й↑)';
-        data['Trayodasi']='Шукла Трайодаши(13й↑)';
-        data['Chaturdasi']='Шукла Чатурдаши(14й↑)';
-        data['Punnami']='Пурнима(Полнолуние)';
-        data['Padyami-']='Кришна Пратипад(1й↓)';
-        data['Vidhiya']='Кришна Двитйа(2й↓)';
-        data['Thadiya']='Кришна Тритйа(3й↓)';
-        data['Chaviti']='Кришна Чатуртхи(4й↓)';
-        data['Panchami']='Кришна Панчами(5й↓)';
-        data['Shasti']='Кришна Шаштхи(6й↓)';
-        data['Sapthami']='Кришна Саптами(7й↓)';
-        data['Ashtami']='Кришна Аштами(8й↓)';
-        data['Navami']='Кришна Навами(9й↓)';
-        data['Dasami']='Кришна Дашами(10й↓)';
-        data['Ekadasi']='Кришна Экадаши(11й↓)';
-        data['Dvadasi']='Кришна Двадаши(12й↓)';
-        data['Trayodasi']='Кришна Трайодаши(13й↓)';
-        data['Chaturdasi']='Кришна Чатурдаши(14й↓) ';
-        data['Amavasya']='Амавашья(Новолуние)';
+        data['Padyami*']='Кришна Пратипад(1й↑)';
+        data['Vidhiya']='Кришна Двитйа(2й↑)';
+        data['Thadiya']='Кришна Тритйа(3й↑)';
+        data['Chavithi']='Кришна Чатуртхи(4й↑)';
+        data['Panchami']='Кришна Панчами(5й↑)';
+        data['Shasti']='Кришна Шаштхи(6й↑)';
+        data['Sapthami']='Кришна Саптами(7й↑)';
+        data['Ashtami']='Кришна Аштами(8й↑)';
+        data['Navami']='Кришна Навами(9й↑)';
+        data['Dasami']='Кришна Дашами(10й↑)';
+        data['Ekadasi']='Кришна Экадаши(11й↑)';
+        data['Dvadasi']='Кришна Двадаши(12й↑)';
+        data['Trayodasi']='Кришна Трайодаши(13й↑)';
+        data['Chaturdasi']='Кришна Чатурдаши(14й↑)';
+        data['Punnami']='Амавасйа (Новолуние)';
+
+        data['Padyami-']='Шукла Пратипад(1й↓)';
+        data['Vidhiya']='Шукла Двитйа(2й↓)';
+        data['Thadiya']='Шукла Тритйа(3й↓)';
+        data['Chaviti']='Шукла Чатуртхи(4й↓)';
+        data['Panchami']='Шукла Панчами(5й↓)';
+        data['Shasti']='Шукла Шаштхи(6й↓)';
+        data['Sapthami']='Шукла Саптами(7й↓)';
+        data['Ashtami']='Шукла Аштами(8й↓)';
+        data['Navami']='Шукла Навами(9й↓)';
+        data['Dasami']='Шукла Дашами(10й↓)';
+        data['Ekadasi']='Шукла Экадаши(11й↓)';
+        data['Dvadasi']='Шукла Двадаши(12й↓)';
+        data['Trayodasi']='Шукла Трайодаши(13й↓)';
+        data['Chaturdasi']='Шукла Чатурдаши(14й↓) ';
+        data['Amavasya']='Шукла Пурнима(Полнолуние)';
         
              return data[name];
      }
