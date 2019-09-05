@@ -106,12 +106,12 @@ class UserForm extends Component {
       <div className="containter">
         <div className="row">
           <div className="col-sm-3">
-            <form className="container border border-secondary rounded">
+            <form className="container border border-secondary rounded" style={{width:340}}>
               <div className="form-group">
                 <label htmlFor="currentDate">День прогноза: </label>
                 <div>
                   
-                  <DatePicker
+                  <DatePicker                    
                     className="form-control"
                     selected={this.state.currentDate}
                     onChange={this.handleChangeCurrentDate}
@@ -120,6 +120,7 @@ class UserForm extends Component {
                     timeIntervals={15}
                     dateFormat="MMMM d, yyyy h:mm aa"
                     timeCaption="time"
+                    
                   />
                   
                 </div>
