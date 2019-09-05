@@ -87,7 +87,7 @@ class UserForm extends Component {
     var birthData = {moon: birthInfo.Raasi.index, nakshatra: birthInfo.Nakshatra.index};
     // store.dispatch(setBirthData(birthData));
    
-    this.props.setBirthData(birthData);
+    this.props.setBirthData({...birthInfo, ...birthData});
 
     let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
     if (houseNumber < 0) {

@@ -9,12 +9,14 @@ import "./PanchangaInfo.css";
 import { calculateTarabala, getChandraBala } from "../../services/astro";
 
 const PanchangaInfo = props => {
+  
   if (!props.info) {
     return null;
   }
   let chandrabala = null;
   let tarabala = null;
   if (props.birthInfo) {
+  
     chandrabala = getChandraBala(props.birthInfo.Raasi.index, props.info.Raasi.index);
     
     tarabala = calculateTarabala(

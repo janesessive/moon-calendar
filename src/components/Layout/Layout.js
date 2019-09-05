@@ -15,6 +15,7 @@ class Layout extends Component {
   render() {
     return (
       <div className="Layout">
+        {/* <NavBar /> */}
         
 
         <nav className="navbar fixed-top navbar-expand-sm bg-dark navbar-dark">
