@@ -134,6 +134,7 @@ export const calculatePanchanga = date => {
   const next = calculateNextSignStart(date, currentInfo);
   currentInfo.Raasi.firstSignDate = first.date;
   currentInfo.Raasi.nextSignDate = next.date;
+  currentInfo.date = date;
   return currentInfo;
 };
 

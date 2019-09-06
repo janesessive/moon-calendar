@@ -45,6 +45,27 @@ class CurrentInfo extends Component {
     this.setState({ description });
   };
 
+  setNextDayOnClick = () => {
+    let date = new Date(this.state.currentDate.getTime());
+
+    let nextDateMs =  date.setDate(date.getDate() + 1);
+    const  nextDate = new Date(nextDateMs);
+    this.setState({currentDate: nextDate}, ()=>{this.calculateOnClick()});
+  }
+
+  setPreviousDayOnClick = () => {
+    let date = new Date(this.state.currentDate.getTime());
+
+    let nextDateMs =  date.setDate(date.getDate() - 1);
+    const  nextDate = new Date(nextDateMs);
+    this.setState({currentDate: nextDate}, ()=>{this.calculateOnClick()});
+  }
+
+  setCurrentDayOnClick = () => {
+    let date = new Date();
+    this.setState({currentDate: date}, ()=>{this.calculateOnClick()});
+  }
+
   render() {
     if (!this.props.birthData) {
       return (
@@ -87,6 +108,33 @@ let birthDateStr = formatDate( birthDateObj);
               <div className="col-auto">
                 <button
                   type="button"
+                  className="btn btn-secondary mb-2"
+                  onClick={this.setPreviousDayOnClick}
+                >
+                  ⯇ 
+                </button>
+              </div>
+              <div className="col-auto">
+                <button
+                  type="button"
+                  className="btn btn-secondary mb-2"
+                  onClick={this.setCurrentDayOnClick}
+                >
+                  ⬤ 
+                </button>
+              </div>
+              <div className="col-auto">
+                <button
+                  type="button"
+                  className="btn btn-secondary mb-2"
+                  onClick={this.setNextDayOnClick}
+                >
+                  ⯈
+                </button>
+              </div>
+              <div className="col-auto">
+                <button
+                  type="button"
                   className="btn btn-primary mb-2"
                   onClick={this.calculateOnClick}
                 >
@@ -101,7 +149,7 @@ let birthDateStr = formatDate( birthDateObj);
             <PanchangaInfo
               birthInfo={this.props.birthData}
               info={this.state.currentInfo}
-              currentDate={this.state.currentDate}
+              currentDate={this.state.currentInfo?this.state.currentInfo.date:null}
             />
           </div>
           <div
