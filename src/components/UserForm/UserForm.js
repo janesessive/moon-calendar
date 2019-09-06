@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as actionCreators from '../../store/actions';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as actionCreators from "../../store/actions";
 import DatePicker from "react-datepicker";
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
@@ -15,17 +15,17 @@ class UserForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: new Date(),
       birthDate: new Date(),
       timeZone: "",
       selectedOption: ""
     };
-    this.handleChangeCurrentDate = this.handleChangeCurrentDate.bind(this);
     this.handleChangeBirthDate = this.handleChangeBirthDate.bind(this);
   }
 
   componentDidMount() {
+    
     let item = JSON.parse(localStorage.getItem(key));
+
     if (item && item.birthDate && item.timeZone && item.selectedOption) {
       const birthDate = new Date(item.birthDate);
       this.setState(
@@ -35,16 +35,17 @@ class UserForm extends Component {
           selectedOption: item.selectedOption
         },
         () => {
-          this.calculateResult();
+          const birthPanchanga = this.calculateBirthPanchanga(
+            this.state.birthDate,
+            this.state.timeZone,
+            this.state.selectedOption
+          );
+          debugger;
+          this.setState({ birthInfo: birthPanchanga });
+    //      this.props.setBirthData(birthPanchanga); //REDUX store
         }
       );
     }
-  }
-
-  handleChangeCurrentDate(date) {
-    this.setState({
-      currentDate: date
-    });
   }
 
   handleChangeBirthDate(date) {
@@ -74,57 +75,41 @@ class UserForm extends Component {
     localStorage.setItem(key, JSON.stringify(myObj));
   };
 
+  handleOkButtonClick = () => {
+    const birthPanchanga = this.calculateBirthPanchanga(
+      this.state.birthDate,
+      this.state.timeZone,
+      this.state.selectedOption
+    );
+    this.setState({ birthInfo: birthPanchanga });
+    this.props.setBirthData(birthPanchanga); //REDUX store
+  };
 
-  calculateResult = () => {
-     
-    const utcDate = applyTimeZone(this.state.birthDate, this.state.timeZone, this.state.selectedOption);
-    
+  calculateBirthPanchanga = (birthDate, timeZone, timeZoneOption) => {
+    //this.state.birthDate, this.state.timeZone, this.state.selectedOption
+    const utcDate = applyTimeZone(birthDate, timeZone, timeZoneOption);
+
     const birthInfo = calculatePanchanga(utcDate);
-    const currentInfo = calculatePanchanga(this.state.currentDate);
     //TODO: call calculate here
-   
-    this.setState({ birthInfo, currentInfo });
-    var birthData = {moon: birthInfo.Raasi.index, nakshatra: birthInfo.Nakshatra.index};
-    // store.dispatch(setBirthData(birthData));
-   
-    this.props.setBirthData({...birthInfo, ...birthData});
 
-    let houseNumber = currentInfo.Raasi.index - birthInfo.Raasi.index;
-    if (houseNumber < 0) {
-      houseNumber = houseNumber + 12;
-    }
+    var birthData = {
+      moon: birthInfo.Raasi.index,
+      nakshatra: birthInfo.Nakshatra.index
+    };
 
-    houseNumber++;
-    this.setState({ houseNumber });
-
-    const description = houseData.find(d => d.id === houseNumber);
-    this.setState({ description });
+    const result = { ...birthInfo, ...birthData };
+    return result;
   };
 
   render() {
     return (
       <div className="containter">
         <div className="row">
-          <div className="col-sm-3">
-            <form className="container border border-secondary rounded" style={{width:340}}>
-              <div className="form-group">
-                <label htmlFor="currentDate">День прогноза: </label>
-                <div>
-                  
-                  <DatePicker                    
-                    className="form-control"
-                    selected={this.state.currentDate}
-                    onChange={this.handleChangeCurrentDate}
-                    showTimeSelect
-                    timeFormat="HH:mm"
-                    timeIntervals={15}
-                    dateFormat="MMMM d, yyyy h:mm aa"
-                    timeCaption="time"
-                    
-                  />
-                  
-                </div>
-              </div>
+          <div className="col-md-6">
+            <form
+              className="container border border-secondary rounded"
+              style={{ width: 340 }}
+            >
               <div className="form-group">
                 <label htmlFor="birthDate">Дата и время Рождения: </label>
                 <div>
@@ -152,29 +137,6 @@ class UserForm extends Component {
                     value={this.state.timeZone}
                   />
                 </div>
-
-                {/* 
-                <div className="radio">
-                  <label>
-                    <input
-                      type="radio"
-                      value="west"
-                      checked={this.state.selectedOption === "west"}
-                      onChange={this.handleOptionChange}
-                    />
-                    West
-                  </label>
-                
-                  <label>
-                    <input
-                      type="radio"
-                      value="east"
-                      checked={this.state.selectedOption === "east"}
-                      onChange={this.handleOptionChange}
-                    />
-                    East
-                  </label>
-                </div> */}
 
                 <div className="col-auto">
                   <div className="form-check form-check-inline">
@@ -221,7 +183,7 @@ class UserForm extends Component {
                     style={{ margin: "10px" }}
                     type="button"
                     className="btn btn-primary"
-                    onClick={this.calculateResult}
+                    onClick={this.handleOkButtonClick}
                   >
                     Расчитать
                   </button>
@@ -230,40 +192,11 @@ class UserForm extends Component {
             </form>
           </div>
 
-          <div className="col-sm-3">
+          <div className="col-md-6">
             <PanchangaInfo
               info={this.state.birthInfo}
               currentDate={this.state.birthDate}
             />
-          </div>
-          <div className="col-sm-3">
-            <PanchangaInfo
-              birthInfo={this.state.birthInfo}
-              info={this.state.currentInfo}
-              currentDate={this.state.currentDate}
-            />
-          </div>
-          <div
-            className="col-sm-3"
-            style={{
-              width: "800px",
-              margin: "0 auto",
-              borderLeft: "1px solid lightgray",
-              padding: "20px"
-            }}
-          >
-            {this.state.houseNumber ? (
-              <h2>Лунный дом: {this.state.houseNumber}</h2>
-            ) : (
-              ""
-            )}
-
-            <h3>
-              {this.state.description ? this.state.description.title : ""}
-            </h3>
-            <p>
-              {this.state.description ? this.state.description.description : ""}
-            </p>
           </div>
         </div>
       </div>
@@ -271,6 +204,7 @@ class UserForm extends Component {
   }
 }
 
-
-export default connect(state => state, dispatch => bindActionCreators(actionCreators, dispatch))(UserForm);
-
+export default connect(
+  state => state,
+  dispatch => bindActionCreators(actionCreators, dispatch)
+)(UserForm);

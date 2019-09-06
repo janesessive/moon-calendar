@@ -22,6 +22,22 @@ export const applyTimeZone = (date, timeZoneHours, timeZoneOption) => {
   return result;
 };
 
+export const calculateBirthPanchanga = (birthDate, timeZone, timeZoneOption) => {
+  //this.state.birthDate, this.state.timeZone, this.state.selectedOption
+  const utcDate = applyTimeZone(birthDate, timeZone, timeZoneOption);
+
+  const birthInfo = calculatePanchanga(utcDate);
+  //TODO: call calculate here
+
+  var birthData = {
+    moon: birthInfo.Raasi.index,
+    nakshatra: birthInfo.Nakshatra.index
+  };
+
+  const result = { ...birthInfo, ...birthData };
+  return result;
+};
+
 const calculateNextSignStart = (utcDate, info) => {
   const pathToNextSign = 30 - (info.Raasi.degreeAbsolute % 30);
   return findTransitDate(utcDate, info.Raasi.index, pathToNextSign, true);
