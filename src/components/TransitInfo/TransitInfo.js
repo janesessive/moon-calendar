@@ -82,7 +82,14 @@ let birthDateStr = formatDate( birthDateObj);
         <h2>Транзиты Луны</h2>  
          <span style={{marginTop:"10px"}} ><strong>Дата Рождения: {birthDateStr}</strong></span>
          </div>
-
+         <div
+          className="panel border"
+          style={{
+            padding: 20,
+            backgroundColor: "whitesmoke",
+            marginBottom: 20
+          }}
+        >
         <form>
           <div className="form-row align-items-center">
             <div className="col-auto">
@@ -119,6 +126,7 @@ let birthDateStr = formatDate( birthDateObj);
             </div>
           </div>
         </form>
+        </div>
 
         {this.state.loading ? (
           <div

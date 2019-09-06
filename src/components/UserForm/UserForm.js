@@ -110,9 +110,10 @@ class UserForm extends Component {
         </div>
         <div className="row">
           <div className="col-md-6">
+            
             <form
               className="container border border-secondary rounded"
-              style={{ width: 340 }}
+              style={{ width: 340 , padding: 20, backgroundColor: "whitesmoke"}}
             >
               <div className="form-group">
                 <label htmlFor="birthDate">Дата и время Рождения: </label>
