@@ -72,9 +72,16 @@ class TransitInfo extends Component {
         </div>
       );
     }
+    let birthDateObj = new Date(this.props.birthData.date);
+let birthDateStr = formatDate( birthDateObj);
+
     return (
       <div className="container">
+        <div>
+         <span>Дата Рождения: {birthDateStr}</span>
+         </div>
         <form>
+        
           <div className="form-row align-items-center">
             <div className="col-auto">
               <label className="my-1 mr-2" htmlFor="inlineFormInput">

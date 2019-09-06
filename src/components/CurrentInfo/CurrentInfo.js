@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import { houseData } from "../../lib/houseData";
 import { calculatePanchanga, getChandraBala } from "../../services/astro";
+import { formatDate } from "../../lib/utils";
 
 class CurrentInfo extends Component {
   constructor(props) {
@@ -50,9 +51,15 @@ class CurrentInfo extends Component {
           <h2>Пожалуйста, введите дату рождения на первой странице</h2>
         </div>
       );
+      
     }
+
+    let birthDateObj = new Date(this.props.birthData.date);
+let birthDateStr = formatDate( birthDateObj);
+
     return (
       <div className="container">
+        <span>Дата Рождения: {birthDateStr}</span>
         <div
           className="panel border"
           style={{

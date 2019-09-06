@@ -81,6 +81,7 @@ class UserForm extends Component {
       this.state.timeZone,
       this.state.selectedOption
     );
+    birthPanchanga.date = this.state.birthDate;
     this.setState({ birthInfo: birthPanchanga });
     this.props.setBirthData(birthPanchanga); //REDUX store
   };

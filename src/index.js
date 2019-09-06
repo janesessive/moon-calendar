@@ -39,6 +39,7 @@ if (item && item.birthDate && item.timeZone && item.selectedOption) {
     item.selectedOption
   );
 
+  birthPanchanga.date = item.birthDate;
   store.dispatch({ type: "SET_BIRTH_DATA", birthData: birthPanchanga });
   //REDUX store
 }
