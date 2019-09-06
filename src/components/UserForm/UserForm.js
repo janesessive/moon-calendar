@@ -104,7 +104,10 @@ class UserForm extends Component {
 
   render() {
     return (
-      <div className="containter">
+      <div className="container">
+        <div className="pageHeader">
+         <h2>Информация по дате рождения</h2>  
+        </div>
         <div className="row">
           <div className="col-md-6">
             <form

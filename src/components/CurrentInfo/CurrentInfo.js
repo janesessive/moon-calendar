@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import './CurrentInfo.css'
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -58,8 +59,11 @@ class CurrentInfo extends Component {
 let birthDateStr = formatDate( birthDateObj);
 
     return (
-      <div className="container">
-        <span>Дата Рождения: {birthDateStr}</span>
+      <div className="container" >
+         <div className="pageHeader">
+         <h2>Текущая информация</h2>  
+        <span style={{marginTop:"10px"}} ><strong>Дата Рождения: {birthDateStr}</strong></span>
+        </div>
         <div
           className="panel border"
           style={{

@@ -77,11 +77,13 @@ let birthDateStr = formatDate( birthDateObj);
 
     return (
       <div className="container">
-        <div>
-         <span>Дата Рождения: {birthDateStr}</span>
+       
+        <div className="pageHeader">
+        <h2>Транзиты Луны</h2>  
+         <span style={{marginTop:"10px"}} ><strong>Дата Рождения: {birthDateStr}</strong></span>
          </div>
+
         <form>
-        
           <div className="form-row align-items-center">
             <div className="col-auto">
               <label className="my-1 mr-2" htmlFor="inlineFormInput">
