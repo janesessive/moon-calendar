@@ -131,6 +131,10 @@ const PanchangaInfo = props => {
           Титхи
         </label>
         <div className="col-sm-8">
+        {!tarabala?
+        <Link className="form-control-plaintext customLink" to={`/tithi-birth-info/${props.info.Tithi.index + 1}`}>
+        {translateTithi(props.info.Tithi.name)}
+          </Link> :
           <input
             type="tithi"
             readOnly
@@ -138,7 +142,7 @@ const PanchangaInfo = props => {
             id="tithi"
             // value={props.info.Tithi.name}
             value={translateTithi(props.info.Tithi.name)}
-          />
+          />}
           <input
             type="text"
             readOnly

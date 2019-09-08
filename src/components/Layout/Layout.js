@@ -10,6 +10,7 @@ import NakshatraInfo from "../NakshatraInfo/NakshatraInfo";
 import TarabalaInfo from "../TarabalaInfo/TarabalaInfo";
 import DayInfo from "../DayInfo/DayInfo";
 import CurrentInfo from "../CurrentInfo/CurrentInfo";
+import TithiBirthInfo from "../TithiBirthInfo/TithiBirthInfo";
 
 class Layout extends Component {
   render() {
@@ -42,12 +43,13 @@ class Layout extends Component {
         <main className="content">
           <Switch>
             <Route exact path="/" component={UserForm} />
+            <Route path="/current-info" component={CurrentInfo} />
             <Route path="/transit" component={TransitInfo} />
             <Route path="/houseinfo/:id" component={HouseInfo} />
             <Route path="/nakshatrainfo/:id" component={NakshatraInfo} />
             <Route path="/tarabalainfo/:id" component={TarabalaInfo} />
             <Route path="/dayinfo/:id" component={DayInfo} />
-            <Route path="/current-info" component={CurrentInfo} />
+            <Route path="/tithi-birth-info/:id" component={TithiBirthInfo} />
           </Switch>
         </main>
       </div>

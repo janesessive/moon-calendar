@@ -1120,6 +1120,7 @@ var panchang = {
     this.Tithi.name = tith[n_tithi];
     this.Tithi.start = s_tithi.start;
     this.Tithi.end = s_tithi.end;
+    this.Tithi.index = n_tithi;
 
     
     var result = {};
@@ -1160,6 +1161,7 @@ result.Yoga.name = yog[n_yoga];
 result.Tithi.name = tith[n_tithi];
     result.Tithi.start = s_tithi.start;
     result.Tithi.end = s_tithi.end;
+    result.Tithi.index = n_tithi;
 
     if (cb) {
       cb();
