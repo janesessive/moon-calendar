@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import DatePicker from "react-datepicker";
+import Undraw from './undraw_virtual.png';
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
@@ -104,7 +105,14 @@ class UserForm extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container" style={{  
+        backgroundImage: `url(${Undraw})`,
+        backgroundOrigin:'content-box',
+        backgroundPosition: 'left-bottom',
+        // backgroundAttachment: 'fixed',
+        backgroundSize: '58%',
+        backgroundRepeat: 'no-repeat'
+      }}>
         <div className="pageHeader">
          <h2>Информация по дате рождения</h2>  
         </div>
