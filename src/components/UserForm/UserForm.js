@@ -110,8 +110,9 @@ class UserForm extends Component {
   validateTimeZone=(value)=> {
     if (!value) return "required";
     const tz = parseFloat(value);
+    if (tz===0) return "";
     if (!tz || isNaN(tz)) return "invalid format";
-    if (tz<0 ||tz>12) return "out of range";
+    if (tz<0||tz>12) return "out of range";
     return "";
   }
 
@@ -119,11 +120,17 @@ class UserForm extends Component {
     if (!value) return "required";
     return "";
   }
+  
 
   render() {
     let tzClass="form-control";
     if (this.state.tzError) {
       tzClass += " error";
+    }
+
+    let errors = false;
+    if (!this.state.birthDate || !this.state.timeZone || !this.state.selectedOption || this.state.tzError) {
+      errors = true;
     }
     return (
       <div className="container" style={{  
@@ -168,6 +175,8 @@ class UserForm extends Component {
                     style={{ width: "60px" }}
                     id="timeZone"
                     type="number"
+                    min="0"
+                    max="12"
                     onChange={this.onTimeZoneChanged}
                     value={this.state.timeZone}
                   />
@@ -211,6 +220,7 @@ class UserForm extends Component {
                     type="button"
                     className="btn btn-success"
                     onClick={this.saveData}
+                    disabled={errors}
                   >
                     Сохранить
                   </button>
@@ -220,6 +230,7 @@ class UserForm extends Component {
                     type="button"
                     className="btn btn-primary"
                     onClick={this.handleOkButtonClick}
+                    disabled={errors}
                   >
                     Расчитать
                   </button>
