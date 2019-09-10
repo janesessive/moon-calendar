@@ -50,14 +50,18 @@ class UserForm extends Component {
   }
 
   handleChangeBirthDate(date) {
+    const birthDateError = this.validateBirthDate(date);
     this.setState({
-      birthDate: date
+      birthDate: date,
+      birthDateError
     });
   }
 
   onTimeZoneChanged = e => {
     const zoneNumber = e.target.value;
-    this.setState({ timeZone: zoneNumber });
+   const tzError = this.validateTimeZone(zoneNumber);
+
+    this.setState({ timeZone: zoneNumber , tzError});
   };
 
   handleOptionChange = e => {
@@ -103,7 +107,24 @@ class UserForm extends Component {
     return result;
   };
 
+  validateTimeZone=(value)=> {
+    if (!value) return "required";
+    const tz = parseFloat(value);
+    if (!tz || isNaN(tz)) return "invalid format";
+    if (tz<0 ||tz>12) return "out of range";
+    return "";
+  }
+
+  validateBirthDate=(value)=> {
+    if (!value) return "required";
+    return "";
+  }
+
   render() {
+    let tzClass="form-control";
+    if (this.state.tzError) {
+      tzClass += " error";
+    }
     return (
       <div className="container" style={{  
         backgroundImage: `url(${Undraw})`,
@@ -136,19 +157,21 @@ class UserForm extends Component {
                     dateFormat="MMMM d, yyyy h:mm aa"
                     timeCaption="time"
                   />
+                  <span style={{color: 'red'}}>{this.state.birthDateError}</span>
                 </div>
               </div>
               <div className="form-row">
                 <div className="col-auto">
                   <label htmlFor="timeZone">Часовой пояс: </label>
                   <input
-                    className="form-control"
+                    className={tzClass}
                     style={{ width: "60px" }}
                     id="timeZone"
                     type="number"
                     onChange={this.onTimeZoneChanged}
                     value={this.state.timeZone}
                   />
+                  <span style={{color: 'red'}}>{this.state.tzError}</span>
                 </div>
 
                 <div className="col-auto">

@@ -20,3 +20,8 @@ code {
   color: darkslategray;
         margin-bottom: 20px;
 }
+
+.error {
+  background-color: lightcoral !important;
+  border: 1px solid red;
+}
