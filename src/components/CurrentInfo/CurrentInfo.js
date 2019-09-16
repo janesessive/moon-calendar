@@ -90,9 +90,10 @@ let birthDateStr = formatDate( birthDateObj);
       <div className="container" 
        >
          <div className="pageHeader"
-         style={{  
+         style={{
+          marginBottom:'50px',
           backgroundImage: `url(${Ideation})`,
-          backgroundOrigin:'border-box',
+          // backgroundOrigin:'border-box',
           backgroundPosition: 'right',
           // backgroundAttachment: 'fixed',
           backgroundSize: 'contain',
