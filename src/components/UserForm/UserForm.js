@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as actionCreators from "../../store/actions";
 import DatePicker from "react-datepicker";
 import Undraw from './undraw_virtual.png';
+import { validateField } from './UserFormValidation';
 
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,9 +19,10 @@ class UserForm extends Component {
     this.state = {
       birthDate: new Date(),
       timeZone: "",
-      selectedOption: ""
+      selectedOption: "",
+      errors: ""
     };
-    this.handleChangeBirthDate = this.handleChangeBirthDate.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount() {
@@ -49,26 +51,46 @@ class UserForm extends Component {
     }
   }
 
-  handleChangeBirthDate(date) {
-    const birthDateError = this.validateBirthDate(date);
-    this.setState({
-      birthDate: date,
-      birthDateError
-    });
+  setError = (fieldName, errorMessage)=>{
+    let errors = {...this.state.errors};    
+    errors[fieldName] = errorMessage;    
+    this.setState({errors});
   }
 
-  onTimeZoneChanged = e => {
-    const zoneNumber = e.target.value;
-   const tzError = this.validateTimeZone(zoneNumber);
+  handleInputChange = (event)=> {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-    this.setState({ timeZone: zoneNumber , tzError});
-  };
-
-  handleOptionChange = e => {
     this.setState({
-      selectedOption: e.target.value
+      [name]: value,
+    },  ()=>{
+      let errorMessage = validateField(name, value);
+      this.setError(name, errorMessage);
     });
-  };
+  }
+  
+
+  // handleChangeBirthDate(date) {
+  //   const birthDateError = this.validateBirthDate(date);
+  //   this.setState({
+  //     birthDate: date,
+  //     birthDateError
+  //   });
+  // }
+
+  // onTimeZoneChanged = e => {
+  //   const zoneNumber = e.target.value;
+  //  const tzError = this.validateTimeZone(zoneNumber);
+
+  //   this.setState({ timeZone: zoneNumber , tzError});
+  // };
+
+  // handleOptionChange = e => {
+  //   this.setState({
+  //     selectedOption: e.target.value
+  //   });
+  // };
 
   saveData = () => {
     let myObj = {
@@ -107,29 +129,19 @@ class UserForm extends Component {
     return result;
   };
 
-  validateTimeZone=(value)=> {
-    if (!value) return "required";
-    const tz = parseFloat(value);
-    if (tz===0) return "";
-    if (!tz || isNaN(tz)) return "invalid format";
-    if (tz<0||tz>12) return "out of range";
-    return "";
-  }
-
-  validateBirthDate=(value)=> {
-    if (!value) return "required";
-    return "";
-  }
-  
 
   render() {
     let tzClass="form-control";
-    if (this.state.tzError) {
+    if (this.state.errors.timeZone) {
       tzClass += " error";
     }
 
     let errors = false;
-    if (!this.state.birthDate || !this.state.timeZone || !this.state.selectedOption || this.state.tzError) {
+    if (!this.state.birthDate || 
+        !this.state.timeZone || 
+        !this.state.selectedOption || 
+         this.state.errors.timeZone ||
+         this.state.errors.birthDate) {
       errors = true;
     }
     return (
@@ -156,6 +168,7 @@ class UserForm extends Component {
                 <div>
                   <DatePicker
                     className="form-control"
+                    name='birthDate'
                     selected={this.state.birthDate}
                     onChange={this.handleChangeBirthDate}
                     showTimeSelect
@@ -164,7 +177,7 @@ class UserForm extends Component {
                     dateFormat="MMMM d, yyyy h:mm aa"
                     timeCaption="time"
                   />
-                  <span style={{color: 'red'}}>{this.state.birthDateError}</span>
+                  <span style={{color: 'red'}}>{this.state.errors.birthDate}</span>
                 </div>
               </div>
               <div className="form-row">
@@ -172,15 +185,16 @@ class UserForm extends Component {
                   <label htmlFor="timeZone">Часовой пояс: </label>
                   <input
                     className={tzClass}
+                    name="timeZone"
                     style={{ width: "60px" }}
                     id="timeZone"
                     type="number"
                     min="0"
                     max="12"
-                    onChange={this.onTimeZoneChanged}
+                    onChange={this.handleInputChange}
                     value={this.state.timeZone}
                   />
-                  <span style={{color: 'red'}}>{this.state.tzError}</span>
+                  <span style={{color: 'red'}}>{this.state.errors.timeZone}</span>
                 </div>
 
                 <div className="col-auto">
@@ -188,11 +202,11 @@ class UserForm extends Component {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="selectedOption"
                       id="east"
                       value="east"
                       checked={this.state.selectedOption === "east"}
-                      onChange={this.handleOptionChange}
+                      onChange={this.handleInputChange}
                     />
                     <label className="form-check-label" htmlFor="east">
                       восток
@@ -202,11 +216,11 @@ class UserForm extends Component {
                     <input
                       className="form-check-input"
                       type="radio"
-                      name="inlineRadioOptions"
+                      name="selectedOption"
                       id="west"
                       value="west"
                       checked={this.state.selectedOption === "west"}
-                      onChange={this.handleOptionChange}
+                      onChange={this.handleInputChange}
                     />
                     <label className="form-check-label" htmlFor="west">
                       запад

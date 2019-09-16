@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import './CurrentInfo.css'
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
+import Ideation from './Ideation.png';
 import "react-datepicker/dist/react-datepicker.css";
 import PanchangaInfo from "../PanchangaInfo/PanchangaInfo";
 import { houseData } from "../../lib/houseData";
@@ -25,11 +26,15 @@ class CurrentInfo extends Component {
     this.calculateOnClick();
   }
 
+ 
+
   handleChangeCurrentDate(date) {
     this.setState({
       currentDate: date
     });
   }
+
+  
 
   calculateOnClick = () => {
     const currentInfo = calculatePanchanga(this.state.currentDate);
@@ -79,9 +84,20 @@ class CurrentInfo extends Component {
     let birthDateObj = new Date(this.props.birthData.date);
 let birthDateStr = formatDate( birthDateObj);
 
+
+
     return (
-      <div className="container" >
-         <div className="pageHeader">
+      <div className="container" 
+       >
+         <div className="pageHeader"
+         style={{  
+          backgroundImage: `url(${Ideation})`,
+          backgroundOrigin:'border-box',
+          backgroundPosition: 'right',
+          // backgroundAttachment: 'fixed',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat'
+        }}>
          <h2>Текущая информация</h2>  
         <span style={{marginTop:"10px"}} ><strong>Дата Рождения: {birthDateStr}</strong></span>
         </div>
@@ -104,6 +120,7 @@ let birthDateStr = formatDate( birthDateObj);
                   selected={this.state.currentDate}
                   onChange={this.handleChangeCurrentDate}
                 />
+                 <span style={{color: 'red'}}>{this.state.currentDateError}</span>
               </div>
               <div className="col-auto">
                 <button
@@ -137,6 +154,7 @@ let birthDateStr = formatDate( birthDateObj);
                   type="button"
                   className="btn btn-primary mb-2"
                   onClick={this.calculateOnClick}
+                  disabled={!this.state.currentDate}
                 >
                   Расчитать
                 </button>

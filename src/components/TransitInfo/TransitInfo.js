@@ -6,6 +6,7 @@ import { RingLoader } from "react-spinners";
 import { getChandraBala, determineGoodBadDay } from "../../services/astro";
 
 import DatePicker from "react-datepicker";
+import Hologram from './hologram.png';
 import { css } from "@emotion/core";
 import "./TransitInfo.css";
 
@@ -78,7 +79,15 @@ let birthDateStr = formatDate( birthDateObj);
     return (
       <div className="container">
        
-        <div className="pageHeader">
+        <div className="pageHeader"
+        style={{  
+          backgroundImage: `url(${Hologram})`,
+          backgroundOrigin:'border-box',
+          backgroundPosition: 'right',
+          // backgroundAttachment: 'fixed',
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat'
+        }}>
         <h2>Транзиты Луны</h2>  
          <span style={{marginTop:"10px"}} ><strong>Дата Рождения: {birthDateStr}</strong></span>
          </div>
